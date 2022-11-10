@@ -11,7 +11,7 @@ app.use(cors());
 
 app.use(bodyParser());
 app.use(router.routes());
-const PORT = process.env.DEV_PORT | 3000;
+const PORT = process.env.DEV_PORT || 3000;
 
 app.listen(PORT, (err) => {
   if (err) console.log('Problem on index with app.listen');
