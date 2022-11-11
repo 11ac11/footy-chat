@@ -26,6 +26,8 @@ export default function MatchList({ navigation }) {
             description={game.description}
             location={game.location}
             date={game.date}
+            admin={game.admin}
+            max_players={game.max_players}
           />
         ))}
       </View>

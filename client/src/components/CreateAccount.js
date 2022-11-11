@@ -5,7 +5,11 @@ import SelectList from 'react-native-dropdown-select-list';
 import { playerService } from '../services/playerService';
 import { theme } from '../theme';
 
-export const RegisterForm = () => {
+export const CreateAccount = ({
+  navigation,
+  setIsAuthenticated,
+  setUserEmail,
+}) => {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
   const [name, setName] = useState('');
@@ -22,11 +26,12 @@ export const RegisterForm = () => {
   ];
 
   const foot = [{ value: 'right' }, { value: 'left' }, { value: 'both' }];
-
   const side = [{ value: 'right' }, { value: 'left' }, { value: 'both' }];
 
-  function handlePress() {
+  const handlePress = async (e) => {
     const newPlayer = {
+      email: email,
+      password: pw,
       name: name,
       position: selectedPosition,
       side: selectedSide,
@@ -34,19 +39,22 @@ export const RegisterForm = () => {
       nationality: 'British',
       team: 'PSG',
     };
-    playerService.postPlayer(newPlayer);
-    // .then((eventFromDB) => {
-    //   setEvents((prevState) =>
-    //     [eventFromDB, ...prevState].sort(
-    //       (a, b) => new Date(a.date) - new Date(b.date)
-    //     )
-    //   );
-    // })
-    // .catch((error) => console.log(error));
-  }
+    const res = await playerService.postPlayer(newPlayer);
+    if (res.status === 'exists') {
+      alert('Email already exists, please use another email');
+    } else {
+      // This sets isAuthenticated = true and redirects to profile
+      setIsAuthenticated(true);
+      setUserEmail(email);
+      auth.login(() => navigation.navigate('Matches'));
+    }
+  };
 
   return (
     <View style={styles.container}>
+      <Pressable style={styles.closebtn} onPress={() => navigation.goBack()}>
+        <Text>X</Text>
+      </Pressable>
       <Text style={styles.label}>Email</Text>
       <TextInput
         style={styles.input}
@@ -114,7 +122,7 @@ export const RegisterForm = () => {
           styles.button,
         ]}
       >
-        <Text>Save</Text>
+        <Text>Create Account</Text>
       </Pressable>
     </View>
   );
@@ -126,26 +134,28 @@ const styles = StyleSheet.create({
     padding: 5,
     marginHorizontal: 20,
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closebtn: {
+    alignSelf: 'flex-end',
   },
   label: {
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 5,
     marginHorizontal: 20,
     fontFamily: 'GemunuLibreBold',
-    fontSize: 18,
+    fontSize: 16,
     alignSelf: 'flex-start',
     letterSpacing: 2,
   },
   input: {
     borderWidth: 1,
     borderColor: '#666',
-    padding: 10,
     paddingHorizontal: 20,
     borderRadius: 20,
     height: 50,
     width: 300,
     color: theme.onyx,
-    placeholderTextColor: 'red',
   },
   picker: {
     borderWidth: 1,

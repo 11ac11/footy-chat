@@ -1,7 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, Pressable } from 'react-native';
+import { ScrollView, StyleSheet, Text, Pressable, View } from 'react-native';
 import MatchList from '../components/MatchList';
-import { CreateMatchModal } from '../components/CreateMatchModal';
 import { theme } from '../theme';
 
 export const Home = ({ navigation }) => {

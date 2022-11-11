@@ -8,8 +8,9 @@ export default function MatchItem({
   location,
   description,
   date,
-  organiser,
   navigation,
+  admin,
+  max_players,
 }) {
   return (
     <>
@@ -20,9 +21,10 @@ export default function MatchItem({
             _id: _id,
             location: location,
             date: date,
-            organiser: organiser,
+            admin: admin,
             description: description,
             date: date,
+            max_players: max_players,
           })
         }
       >

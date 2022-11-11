@@ -1,6 +1,5 @@
 export const theme = {
   // colours
-  darkGreen: '#50C162',
   mediumGreen: '#4C8F56',
   emerald: '#50C162',
   gainsboro: '#D9D9D9',

@@ -25,6 +25,13 @@ const gameSchema = new Schema({
     type: Number,
     required: true,
   },
+  admin: {
+    type: String,
+    required: true,
+  },
+  players: {
+    type: Array,
+  },
 });
 
 const Game = mongoose.model('Game', gameSchema);

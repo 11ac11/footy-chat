@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { Profile } from './Profile.screen';
-import { CreateMatchModal } from '../components/CreateMatchModal';
+import { UserContext } from '../../App';
 
 const Stack = createStackNavigator();
 
-export const ProfileStack = ({ navigation }) => {
+export const ProfileStack = ({ navigation, setIsAuthenticated }) => {
+  const profile = useContext(UserContext);
   return (
-    <Stack.Navigator initialRouteName="Matches">
-      <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Navigator initialRouteName="Profile">
+      <Stack.Screen name="Profile" options={{ title: `Your profile` }}>
+        {(props) => (
+          <Profile {...props} setIsAuthenticated={setIsAuthenticated} />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

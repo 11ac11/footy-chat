@@ -18,14 +18,14 @@ import { theme } from '../theme';
 
 const BottomTabs = createBottomTabNavigator();
 
-export const BottomTabsNavigator = () => {
+export const BottomTabsNavigator = ({ setIsAuthenticated }) => {
   return (
     <BottomTabs.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: styles.nav,
         tabBarActiveTintColor: theme.white,
-        tabBarInactiveTintColor: theme.darkGreen,
+        tabBarInactiveTintColor: theme.emerald,
         tabBarShowLabel: false,
         tabBarIcon: ({ color, size }) => {
           if (route.name === 'MatchStack') {
@@ -47,11 +47,12 @@ export const BottomTabsNavigator = () => {
         component={MatchStack}
         style={styles.container}
       />
-      <BottomTabs.Screen
-        name="ProfileStack"
-        component={ProfileStack}
-        style={styles.container}
-      />
+      <BottomTabs.Screen name="ProfileStack" style={styles.container}>
+        {(props) => (
+          <ProfileStack {...props} setIsAuthenticated={setIsAuthenticated} />
+        )}
+      </BottomTabs.Screen>
+
       {/* <BottomTabs.Screen
         name="Teams"
         component={Teams}

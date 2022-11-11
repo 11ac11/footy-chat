@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Text,
   Modal,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { UserContext } from '../../App';
 
 import { gameService } from '../services/gameService';
 
@@ -17,7 +18,7 @@ export const CreateMatchModal = ({ navigation }) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [location, setLocation] = useState('');
@@ -26,6 +27,7 @@ export const CreateMatchModal = ({ navigation }) => {
 
   const numberOfTeams = [{ value: 1 }, { value: 2 }];
 
+  const profile = useContext(UserContext);
   const today = gameService.getTodayAsDate();
 
   function handlePress() {
@@ -35,6 +37,7 @@ export const CreateMatchModal = ({ navigation }) => {
       location: location,
       max_players: maxPlayers,
       teams: selectedNumberTeams,
+      admin: profile._id,
     };
 
     gameService.postGame(newGame);
@@ -42,12 +45,13 @@ export const CreateMatchModal = ({ navigation }) => {
     navigation.goBack();
   }
 
+  // android and iOS issues with setShow false and !false
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     if (Platform.OS === 'android') {
       setShow(false);
     }
-    setShow(!false);
+    setShow(false);
     setDate(currentDate);
   };
 
@@ -115,7 +119,10 @@ export const CreateMatchModal = ({ navigation }) => {
             </Pressable>
 
             <Text style={{ fontSize: 20, marginTop: 20 }}>
-              selected: {date.toLocaleString().slice(0, -3)}
+              selected:{' '}
+              {Platform.OS === 'android'
+                ? date.toLocaleString().slice(0, -8)
+                : date.toLocaleString().slice(0, -3)}
             </Text>
             <Pressable
               onPress={() => setModalVisible(!modalVisible)}
@@ -144,8 +151,10 @@ export const CreateMatchModal = ({ navigation }) => {
       />
       <Text style={styles.label}>Date</Text>
       <Pressable style={styles.dateTime} onPress={() => setModalVisible(true)}>
-        <Text style={{ color: '#BBB' }}>
-          selected: {date.toLocaleString().slice(0, -3)}
+        <Text>
+          {Platform.OS === 'android'
+            ? date.toLocaleString().slice(0, -8)
+            : date.toLocaleString().slice(0, -3)}
         </Text>
       </Pressable>
       <Text style={styles.label}>Location</Text>
@@ -206,14 +215,17 @@ const styles = StyleSheet.create({
   },
   label: {
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 5,
     marginHorizontal: 20,
-    fontWeight: 'bold',
+    fontFamily: 'GemunuLibreBold',
+    fontSize: 16,
+    alignSelf: 'flex-start',
+    letterSpacing: 2,
   },
   input: {
     borderWidth: 1,
     borderColor: '#666',
-    padding: 10,
+    paddingHorizontal: 20,
     borderRadius: 20,
     height: 50,
     width: 300,
@@ -222,6 +234,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#666',
     padding: 10,
+    paddingHorizontal: 20,
     borderRadius: 20,
     height: 50,
     width: 300,
