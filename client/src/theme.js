@@ -5,7 +5,9 @@ export const theme = {
   gainsboro: '#D9D9D9',
   darkGrey: '#858585',
   onyx: '#3D3D3D',
+  blackish: '#1B1212',
   white: '#FFF',
+  red: '#FF0035',
 
   // fonts
   // fontFamily: 'GemunuLibre',

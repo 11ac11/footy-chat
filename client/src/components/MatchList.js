@@ -27,6 +27,7 @@ export default function MatchList({ navigation }) {
             location={game.location}
             date={game.date}
             admin={game.admin}
+            admin_name={game.admin_name}
             max_players={game.max_players}
           />
         ))}
@@ -37,10 +38,8 @@ export default function MatchList({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 5,
-    width: 350,
-    marginHorizontal: 20,
+    flexGrow: 1,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-start',
   },

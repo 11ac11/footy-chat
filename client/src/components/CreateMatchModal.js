@@ -10,9 +10,12 @@ import {
 } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import { UserContext } from '../../App';
 
 import { gameService } from '../services/gameService';
+import { theme } from '../theme';
 
 export const CreateMatchModal = ({ navigation }) => {
   const [description, setDescription] = useState('');
@@ -38,10 +41,12 @@ export const CreateMatchModal = ({ navigation }) => {
       max_players: maxPlayers,
       teams: selectedNumberTeams,
       admin: profile._id,
+      admin_name: profile.name,
+      players: [profile],
     };
 
     gameService.postGame(newGame);
-    // need to add push here
+    // need to add push to matchlist here
     navigation.goBack();
   }
 
@@ -71,7 +76,7 @@ export const CreateMatchModal = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Modal
         visible={modalVisible}
         onRequestClose={() => {
@@ -185,7 +190,13 @@ export const CreateMatchModal = ({ navigation }) => {
         onSelect={() => setNumberTeams(selectedNumberTeams)}
         boxStyles={styles.picker}
         search={false}
-        dropdownStyles={{ borderRadius: 30, height: 30 }}
+        dropdownStyles={{
+          borderRadius: 30,
+          flexGrow: 0,
+          borderColor: theme.onyx,
+        }}
+        inputStyles={{ color: theme.onyx }}
+        dropdownTextStyles={{ color: theme.onyx }}
       />
       <Pressable
         onPress={handlePress}
@@ -198,7 +209,7 @@ export const CreateMatchModal = ({ navigation }) => {
       >
         <Text>Save</Text>
       </Pressable>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

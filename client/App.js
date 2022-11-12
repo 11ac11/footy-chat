@@ -34,12 +34,12 @@ export default function App() {
   async function fetchProfile() {
     const profile = await playerService.getPlayerByEmail(userEmail);
     setCurrentUser(profile);
-    console.log(profile.name);
+    console.log('current user: ', profile.name);
   }
 
   useEffect(() => {
     fetchProfile();
-    console.log(userEmail);
+    console.log('current user email: ', userEmail);
   }, [userEmail]);
 
   const Stack = createStackNavigator();

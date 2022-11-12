@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Pressable } from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  Pressable,
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import SelectList from 'react-native-dropdown-select-list';
+
+import auth from '../../utils/auth';
 
 import { playerService } from '../services/playerService';
 import { theme } from '../theme';
@@ -16,6 +26,8 @@ export const CreateAccount = ({
   const [selectedPosition, setPosition] = useState('');
   const [selectedFoot, setFoot] = useState('');
   const [selectedSide, setSide] = useState('');
+  const [nationality, setNationality] = useState('');
+  const [team, setTeam] = useState('');
 
   const position = [
     { value: 'defender' },
@@ -36,8 +48,8 @@ export const CreateAccount = ({
       position: selectedPosition,
       side: selectedSide,
       foot: selectedFoot,
-      nationality: 'British',
-      team: 'PSG',
+      nationality: nationality,
+      team: team,
     };
     const res = await playerService.postPlayer(newPlayer);
     if (res.status === 'exists') {
@@ -46,12 +58,12 @@ export const CreateAccount = ({
       // This sets isAuthenticated = true and redirects to profile
       setIsAuthenticated(true);
       setUserEmail(email);
-      auth.login(() => navigation.navigate('Matches'));
+      auth.login();
     }
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Pressable style={styles.closebtn} onPress={() => navigation.goBack()}>
         <Text>X</Text>
       </Pressable>
@@ -93,7 +105,13 @@ export const CreateAccount = ({
         onSelect={() => setPosition(selectedPosition)}
         boxStyles={styles.picker}
         search={false}
-        dropdownStyles={{ borderRadius: 30 }}
+        dropdownStyles={{
+          borderRadius: 30,
+          flexGrow: 0,
+          borderColor: theme.onyx,
+        }}
+        inputStyles={{ color: theme.onyx }}
+        dropdownTextStyles={{ color: theme.onyx }}
       />
       <Text style={styles.label}>Preferred Foot</Text>
       <SelectList
@@ -102,7 +120,13 @@ export const CreateAccount = ({
         onSelect={() => setFoot(selectedFoot)}
         boxStyles={styles.picker}
         search={false}
-        dropdownStyles={{ borderRadius: 30, height: 30 }}
+        dropdownStyles={{
+          borderRadius: 30,
+          flexGrow: 0,
+          borderColor: theme.onyx,
+        }}
+        inputStyles={{ color: theme.onyx }}
+        dropdownTextStyles={{ color: theme.onyx }}
       />
       <Text style={styles.label}>Preferred Side</Text>
       <SelectList
@@ -111,8 +135,35 @@ export const CreateAccount = ({
         onSelect={() => setSide(selectedSide)}
         boxStyles={styles.picker}
         search={false}
-        dropdownStyles={{ borderRadius: 30, height: 30 }}
+        dropdownStyles={{
+          borderRadius: 30,
+          flexGrow: 0,
+          borderColor: theme.onyx,
+        }}
+        inputStyles={{ color: theme.onyx }}
+        dropdownTextStyles={{ color: theme.onyx }}
       />
+      <Text style={styles.label}>Nationality</Text>
+      <TextInput
+        style={styles.input}
+        value={nationality}
+        label="nationality"
+        onChangeText={setNationality}
+        placeholder="Nationality"
+        placeholderTextColor={theme.onyx}
+        keyboardType="default"
+      />
+      <Text style={styles.label}>Team</Text>
+      <TextInput
+        style={styles.input}
+        value={team}
+        label="team"
+        onChangeText={setTeam}
+        placeholder="Who do you support?"
+        placeholderTextColor={theme.onyx}
+        keyboardType="default"
+      />
+
       <Pressable
         onPress={handlePress}
         style={({ pressed }) => [
@@ -124,19 +175,20 @@ export const CreateAccount = ({
       >
         <Text>Create Account</Text>
       </Pressable>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 5,
     marginHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   closebtn: {
+    padding: 10,
     alignSelf: 'flex-end',
   },
   label: {
@@ -147,10 +199,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     alignSelf: 'flex-start',
     letterSpacing: 2,
+    color: theme.blackish,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#666',
+    borderColor: theme.onyx,
     paddingHorizontal: 20,
     borderRadius: 20,
     height: 50,

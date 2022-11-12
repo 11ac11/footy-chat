@@ -1,6 +1,8 @@
 //import Moment from 'react-moment';
 import Moment from 'moment';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { UserContext } from '../../App';
+import { useContext } from 'react';
 import { theme } from '../theme';
 
 export default function MatchItem({
@@ -10,8 +12,10 @@ export default function MatchItem({
   date,
   navigation,
   admin,
+  admin_name,
   max_players,
 }) {
+  const user = useContext(UserContext);
   return (
     <>
       <Pressable
@@ -33,11 +37,21 @@ export default function MatchItem({
             {Moment(date).format('ddd Do MMM - HH:mm')}
           </Text>
         </View>
+        <View style={styles.gameDetailsBox}>
+          <Text style={styles.gameDetails}>{description}</Text>
+          <Text style={styles.gameDetails}>@ {location} </Text>
+        </View>
+
         <View>
-          <Text style={styles.gameDetails}>
-            {description} {'\n'}@ {location} {'\n'}
-            Organiser
-          </Text>
+          {admin === user._id ? (
+            <Text style={[styles.gameDetails, styles.organiser]}>
+              ⭐ You are organising
+            </Text>
+          ) : (
+            <Text style={[styles.gameDetails, styles.organiser]}>
+              Organiser : {admin_name}
+            </Text>
+          )}
         </View>
       </Pressable>
     </>
@@ -48,12 +62,13 @@ const styles = StyleSheet.create({
   gameItem: {
     textDecoration: 'none',
     color: 'inherit',
-    width: '100%',
-    borderRadius: 20,
-    marginBottom: 10,
+    width: '80%',
+    margin: 10,
     borderColor: theme.gainsboro,
     borderStyle: 'solid',
     borderWidth: 1,
+    backgroundColor: theme.white,
+    borderRadius: 20,
   },
 
   gameDateBox: {
@@ -74,11 +89,25 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
   },
 
-  gameDetails: {
+  gameDetailsBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: 10,
+  },
+
+  gameDetails: {
+    padding: 0,
     color: theme.onyx,
     fontFamily: 'GemunuLibreMedium',
-    letterSpacing: 2,
+    letterSpacing: 1,
+    fontSize: 16,
+  },
+
+  organiser: {
+    color: 'grey',
+    fontSize: 14,
+    padding: 10,
+    paddingTop: 0,
   },
 
   selectGame: {

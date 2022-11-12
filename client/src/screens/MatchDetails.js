@@ -12,6 +12,8 @@ import Moment from 'moment';
 import { UserContext } from '../../App';
 import { theme } from '../theme';
 
+import { TrashIcon } from '../components/Icons';
+
 const confirmedPlayers = [
   { name: 'Alex', id: 1 },
   { name: 'Pete', id: 2 },
@@ -48,6 +50,11 @@ export default function MatchDetails({ navigation, route }) {
   const user = useContext(UserContext);
   const { _id, location, description, date, admin, max_players } = route.params;
 
+  function addPlayerToGame() {
+    confirmedPlayers.push(user);
+    console.log(confirmedPlayers);
+  }
+
   const renderPlayer = ({ item }) => (
     <Player name={item.name}>
       <Text>{item.name}</Text>
@@ -57,7 +64,26 @@ export default function MatchDetails({ navigation, route }) {
   return (
     <View contentContainerStyle={styles.container}>
       <View style={styles.matchInfo}>
-        <Text style={styles.matchTitle}>{description}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+          }}
+        >
+          <Text style={styles.matchTitle}>{description}</Text>
+          {user._id === admin ? (
+            <Pressable
+              onPress={addPlayerToGame}
+              style={({ pressed }) => styles.deletebtn}
+            >
+              <TrashIcon />
+            </Pressable>
+          ) : (
+            <></>
+          )}
+        </View>
         <View style={styles.timeLocation}>
           <Text style={styles.matchDetailsText}>
             Max players: {max_players}
@@ -67,35 +93,33 @@ export default function MatchDetails({ navigation, route }) {
             {Moment(date).format('ddd Do MMM - HH:mm')}
           </Text>
         </View>
-        {user._id === admin ? (
-          <Text style={{ color: 'red' }}>Delete game</Text>
-        ) : (
-          <></>
-        )}
       </View>
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <View style={styles.teamList}>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? theme.emerald : theme.mediumGreen,
-              },
-              styles.button,
-            ]}
-          >
-            <Text>Join</Text>
-          </Pressable>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? theme.emerald : theme.white,
-              },
-              styles.button,
-              styles.createAcc,
-            ]}
-          >
-            <Text>Invite</Text>
-          </Pressable>
+          <View style={styles.btnsContainer}>
+            <Pressable
+              onPress={addPlayerToGame}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? theme.gainsboro : theme.emerald,
+                },
+                styles.button,
+              ]}
+            >
+              <Text>Join</Text>
+            </Pressable>
+            <Pressable
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? theme.emerald : theme.white,
+                },
+                styles.button,
+                styles.createAcc,
+              ]}
+            >
+              <Text>Invite</Text>
+            </Pressable>
+          </View>
         </View>
         <Text
           style={{
@@ -125,39 +149,56 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  timeLocation: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    margin: 5,
-  },
-  matchDetailsText: {
-    color: theme.onyx,
-    fontFamily: 'GemunuLibreMedium',
-    margin: 5,
-  },
   matchInfo: {
     width: '100%',
     borderBottomWidth: 1,
     borderColor: theme.gainsboro,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   matchTitle: {
     textAlign: 'center',
     fontFamily: 'GemunuLibreMedium',
     fontSize: 32,
     marginTop: 5,
+    letterSpacing: 2,
+  },
+  matchDetailsText: {
+    color: theme.onyx,
+    fontFamily: 'GemunuLibreMedium',
+    margin: 5,
+    letterSpacing: 1,
+  },
+  timeLocation: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 5,
   },
   teamList: {
     width: '100%',
-    alignItems: 'center',
+    alignItems: 'space-between',
+  },
+  btnsContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   button: {
-    height: 50,
-    width: 300,
-    marginTop: 10,
+    // height: 50,
+    // width: 150,
+    flex: 1,
+    // margin: 10,
+    padding: 10,
     textAlign: 'center',
     alignItems: 'center',
+    // borderRadius: 20,
     justifyContent: 'center',
-    borderRadius: 20,
+  },
+  deletebtn: {
+    padding: 10,
+    position: 'absolute',
+    right: 0,
+    top: 2,
   },
   player: {
     backgroundColor: 'rgba(255,255,255, 0.8)',

@@ -29,6 +29,10 @@ const gameSchema = new Schema({
     type: String,
     required: true,
   },
+  admin_name: {
+    type: String,
+    required: true,
+  },
   players: {
     type: Array,
   },
