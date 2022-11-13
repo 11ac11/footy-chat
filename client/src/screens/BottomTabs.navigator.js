@@ -1,12 +1,10 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home } from './Home.screen';
-import { Profile } from './Profile.screen';
 import { Messages } from './Messages.screen';
 import { Teams } from './Teams.screen';
-import { MatchStack } from './MatchStack.navigator';
+import { MatchStack } from '../matches/MatchStack.navigator';
 import {
   HomeIcon,
   ProfileIcon,

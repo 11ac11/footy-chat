@@ -1,6 +1,9 @@
-const url = 'http://192.168.1.185:3000';
+const url = 'http://192.168.0.12:3000';
 const headers = { 'content-type': 'application/json' };
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// home: 192.168.0.12
+// codeworks: 192.168.1.185
 
 export const playerService = {
   postPlayer: async (player) => {

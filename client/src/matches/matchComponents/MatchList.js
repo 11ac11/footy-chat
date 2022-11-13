@@ -1,20 +1,7 @@
-import { gameService } from '../services/gameService';
-import { useState, useEffect } from 'react';
 import MatchItem from './MatchItem';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
-export default function MatchList({ navigation }) {
-  const [games, setGames] = useState([]);
-
-  async function fetchGames() {
-    const games = await gameService.getGames();
-    setGames(games.sort((a, b) => new Date(a.date) - new Date(b.date)));
-  }
-
-  useEffect(() => {
-    fetchGames();
-  }, []);
-
+export const MatchList = ({ navigation, games, setGames }) => {
   return (
     <>
       <View style={styles.container}>
@@ -22,19 +9,21 @@ export default function MatchList({ navigation }) {
           <MatchItem
             navigation={navigation}
             key={game._id}
-            id={game._id}
+            _id={game._id}
             description={game.description}
             location={game.location}
             date={game.date}
             admin={game.admin}
             admin_name={game.admin_name}
             max_players={game.max_players}
+            players={game.players}
+            setGames={setGames}
           />
         ))}
       </View>
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -1,4 +1,7 @@
-const url = 'http://192.168.1.185:3000/games';
+const url = 'http://192.168.0.12:3000/games';
+
+// home: 192.168.0.12
+// codeworks: 192.168.1.185
 
 export const gameService = {
   postGame: async (game) => {
@@ -27,6 +30,41 @@ export const gameService = {
       return await response.json();
     } catch (error) {
       console.log('ERROR: gameService: _GET_ONE_: ', error);
+    }
+  },
+  deleteThisGame: async function (id) {
+    try {
+      const response = await fetch(`${url}/${id}/delete`, {
+        method: 'DELETE',
+        headers: { 'content-type': 'application/json' },
+      });
+      return response;
+    } catch (error) {
+      console.log('ERROR: gameService: _DELETE_ONE_: ', error);
+    }
+  },
+  addPlayerToGame: async function (data) {
+    try {
+      const response = await fetch(`${url}/${data._id}/addPlayer`, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(data.player),
+      });
+      return await response.json();
+    } catch (error) {
+      console.log('ERROR: gameService: PUT addPlayerToGame: ', error);
+    }
+  },
+  removePlayerFromGame: async function (data) {
+    try {
+      const response = await fetch(`${url}/${data._id}/removePlayer`, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(data.player),
+      });
+      return await response.json();
+    } catch (error) {
+      console.log('ERROR: gameService: PUT addPlayerToGame: ', error);
     }
   },
   getTodayAsDate: function () {

@@ -39,4 +39,60 @@ const postGame = async (ctx) => {
   }
 };
 
-module.exports = { getGames, getThisGame, postGame };
+const deleteGame = async (ctx) => {
+  try {
+    const id = ctx.params.id;
+    const postedGame = await games.deleteOne({ _id: id }); //change func names
+    ctx.status = 201;
+    console.log(`${ctx.params.id} has been deleted`);
+    return (ctx.body = postedGame);
+  } catch (error) {
+    console.log('ERROR in deleteOne @ games controller', error);
+    ctx.body = error;
+    ctx.status = 500;
+  }
+};
+
+const addPlayerToGame = async (ctx) => {
+  try {
+    const id = ctx.params.id;
+    const newPlayer = ctx.request.body;
+
+    const game = await games.findOne({ _id: id });
+    await game.update({ $push: { players: newPlayer } });
+    console.log(`${newPlayer.name} has been added to game`);
+
+    ctx.status = 201;
+    return (ctx.body = newPlayer);
+  } catch (error) {
+    console.log('ERROR in addplayertogame @ games controller', error);
+    ctx.body = error;
+    ctx.status = 500;
+  }
+};
+const removePlayerFromGame = async (ctx) => {
+  try {
+    const id = ctx.params.id;
+    const playerToRemove = ctx.request.body;
+
+    const game = await games.findOne({ _id: id });
+    await game.update({ $pull: { players: playerToRemove } });
+    console.log(`${playerToRemove.name} has been remove from game`);
+
+    ctx.status = 201;
+    return (ctx.body = playerToRemove);
+  } catch (error) {
+    console.log('ERROR in addplayertogame @ games controller', error);
+    ctx.body = error;
+    ctx.status = 500;
+  }
+};
+
+module.exports = {
+  getGames,
+  getThisGame,
+  postGame,
+  deleteGame,
+  addPlayerToGame,
+  removePlayerFromGame,
+};

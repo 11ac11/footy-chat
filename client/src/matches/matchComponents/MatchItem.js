@@ -1,9 +1,9 @@
 //import Moment from 'react-moment';
 import Moment from 'moment';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
-import { UserContext } from '../../App';
+import { UserContext } from '../../../App';
 import { useContext } from 'react';
-import { theme } from '../theme';
+import { theme } from '../../theme';
 
 export default function MatchItem({
   _id,
@@ -14,8 +14,12 @@ export default function MatchItem({
   admin,
   admin_name,
   max_players,
+  players,
+  games,
+  setGames,
 }) {
   const user = useContext(UserContext);
+
   return (
     <>
       <Pressable
@@ -29,6 +33,9 @@ export default function MatchItem({
             description: description,
             date: date,
             max_players: max_players,
+            players: players,
+            games,
+            setGames,
           })
         }
       >
@@ -67,7 +74,7 @@ const styles = StyleSheet.create({
     borderColor: theme.gainsboro,
     borderStyle: 'solid',
     borderWidth: 1,
-    backgroundColor: theme.white,
+    backgroundColor: 'rgba(255,255,255,0.9)',
     borderRadius: 20,
   },
 

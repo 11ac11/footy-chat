@@ -7,7 +7,8 @@ export const theme = {
   onyx: '#3D3D3D',
   blackish: '#1B1212',
   white: '#FFF',
-  red: '#FF0035',
+  red: '#E35335',
+  // red: '#FF0035',
 
   // fonts
   // fontFamily: 'GemunuLibre',

@@ -6,18 +6,16 @@ import {
   StyleSheet,
   TextInput,
   Pressable,
-  Button,
 } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { UserContext } from '../../App';
+import { UserContext } from '../../../App';
+import { gameService } from '../../services/gameService';
+import { theme } from '../../theme';
 
-import { gameService } from '../services/gameService';
-import { theme } from '../theme';
-
-export const CreateMatchModal = ({ navigation }) => {
+export const CreateMatchModal = ({ navigation, setGames }) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -45,8 +43,17 @@ export const CreateMatchModal = ({ navigation }) => {
       players: [profile],
     };
 
-    gameService.postGame(newGame);
-    // need to add push to matchlist here
+    gameService
+      .postGame(newGame)
+      .then((eventFromDB) => {
+        console.log('this is event from dB', eventFromDB);
+        setGames((prevState) =>
+          [eventFromDB, ...prevState].sort(
+            (a, b) => new Date(a.date) - new Date(b.date)
+          )
+        );
+      })
+      .catch((error) => console.log(error));
     navigation.goBack();
   }
 

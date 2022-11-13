@@ -38,7 +38,13 @@ export const CreateAccount = ({
   ];
 
   const foot = [{ value: 'right' }, { value: 'left' }, { value: 'both' }];
-  const side = [{ value: 'right' }, { value: 'left' }, { value: 'both' }];
+  const side = [
+    { value: 'centre' },
+    { value: 'right' },
+    { value: 'left' },
+    { value: 'both' },
+    { value: 'any' },
+  ];
 
   const handlePress = async (e) => {
     const newPlayer = {
