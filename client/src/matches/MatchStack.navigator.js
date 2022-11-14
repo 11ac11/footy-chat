@@ -15,14 +15,13 @@ export const MatchStack = ({ navigation }) => {
 
   async function fetchGames() {
     const games = await gameService.getGames();
-    setGames(games);
+    setGames(games.sort((a, b) => new Date(a.date) - new Date(b.date)));
   }
 
   useEffect(() => {
     fetchGames();
   }, []);
 
-  //console.log(games);
   return (
     <Stack.Navigator
       initialRouteName="Matches"
@@ -30,6 +29,17 @@ export const MatchStack = ({ navigation }) => {
         headerTitleStyle: { color: 'black' },
         headerTitleAlign: 'center',
         headerTintColor: theme.emerald,
+        headerStyle: {
+          backgroundColor: theme.blackish,
+          borderBottomWidth: 0,
+          shadowColor: 'transparent', // this covers iOS
+          elevation: 0, // this covers Android
+        },
+        headerTitleStyle: {
+          color: theme.gainsboro,
+          fontFamily: 'GemunuLibreBold',
+          letterSpacing: 1,
+        },
       }}
     >
       <Stack.Screen name="Matches">

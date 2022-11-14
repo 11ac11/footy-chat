@@ -11,6 +11,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import { theme } from '../theme';
+import PrimaryButton from '../components/PrimaryButton';
 
 // const initialState = {
 //   email: '',
@@ -74,29 +75,11 @@ const Login = ({
           secureTextEntry={true}
           autoCorrect={false}
         />
-        <Pressable
-          onPress={handleSubmit}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? theme.emerald : theme.mediumGreen,
-            },
-            styles.button,
-          ]}
-        >
-          <Text>Login</Text>
-        </Pressable>
-        <Pressable
+        <PrimaryButton onPress={handleSubmit} text={'Login'} />
+        <PrimaryButton
           onPress={() => navigation.navigate('Create Account')}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? theme.emerald : theme.white,
-            },
-            styles.button,
-            styles.createAcc,
-          ]}
-        >
-          <Text>Create Account</Text>
-        </Pressable>
+          text={'Create Account'}
+        />
       </ImageBackground>
     </View>
   );
@@ -133,18 +116,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     alignSelf: 'flex-start',
     letterSpacing: 2,
-  },
-  button: {
-    height: 50,
-    width: 300,
-    marginTop: 20,
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-  },
-  createAcc: {
-    marginTop: 200,
   },
   login: {
     flex: 1,

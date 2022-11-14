@@ -7,9 +7,25 @@ const router = require('./router');
 require('dotenv').config();
 
 const app = new Koa();
+const http = require('http').Server(app);
+
+const socketIO = require('socket.io')(http, {
+  cors: {
+    origin: '<http://localhost:3000>',
+  },
+});
+
 app.use(cors());
 
 app.use(bodyParser());
+socketIO.on('connection', (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+
+  socket.on('disconnect', () => {
+    socket.disconnect();
+    console.log('🔥: A user disconnected');
+  });
+});
 app.use(router.routes());
 const PORT = process.env.DEV_PORT || 3000;
 

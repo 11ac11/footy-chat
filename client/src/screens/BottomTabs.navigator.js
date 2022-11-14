@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Messages } from './Messages.screen';
+import { Messages } from '../messages/Messages.screen';
 import { Teams } from './Teams.screen';
 import { MatchStack } from '../matches/MatchStack.navigator';
 import {
@@ -11,8 +11,9 @@ import {
   TeamIcon,
   MessageIcon,
 } from '../components/Icons';
-import { ProfileStack } from './ProfileStack.navigator';
+import { ProfileStack } from './../profile/ProfileStack.navigator';
 import { theme } from '../theme';
+import { MessageStack } from '../messages/MessageStack.navigator';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -22,9 +23,10 @@ export const BottomTabsNavigator = ({ setIsAuthenticated }) => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: styles.nav,
-        tabBarActiveTintColor: theme.white,
-        tabBarInactiveTintColor: theme.emerald,
+        tabBarActiveTintColor: theme.emerald,
+        tabBarInactiveTintColor: theme.onyx,
         tabBarShowLabel: false,
+        borderTopWidth: 0,
         tabBarIcon: ({ color, size }) => {
           if (route.name === 'MatchStack') {
             return <HomeIcon color={color} size={size} />;
@@ -33,7 +35,7 @@ export const BottomTabsNavigator = ({ setIsAuthenticated }) => {
           }
           // else if (route.name === 'Teams') {
           //   return <TeamIcon color={color} size={size} />;
-          else if (route.name === 'Messages') {
+          else if (route.name === 'MessageStack') {
             return <MessageIcon color={color} size={size} />;
           }
           return null;
@@ -50,17 +52,11 @@ export const BottomTabsNavigator = ({ setIsAuthenticated }) => {
           <ProfileStack {...props} setIsAuthenticated={setIsAuthenticated} />
         )}
       </BottomTabs.Screen>
-
-      {/* <BottomTabs.Screen
-        name="Teams"
-        component={Teams}
-        style={styles.container}
-      /> */}
-      <BottomTabs.Screen
-        name="Messages"
-        component={Messages}
-        style={styles.container}
-      />
+      <BottomTabs.Screen name="MessageStack" style={styles.container}>
+        {(props) => (
+          <MessageStack {...props} setIsAuthenticated={setIsAuthenticated} />
+        )}
+      </BottomTabs.Screen>
     </BottomTabs.Navigator>
   );
 };
@@ -70,8 +66,9 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   nav: {
-    backgroundColor: theme.mediumGreen,
+    backgroundColor: theme.blackish,
     flex: 0.1,
+    borderTopWidth: 0,
   },
 });
 

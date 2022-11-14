@@ -2,7 +2,13 @@ const games = require('../models/gamesModel');
 
 const getGames = async (ctx) => {
   try {
-    ctx.body = await games.find({}); //change func names
+    const today = new Date();
+
+    const filters = {
+      date: { $gt: today },
+    };
+
+    ctx.body = await games.find({}).where(filters);
     ctx.status = 200;
     console.log('GET games: successful.');
     return ctx.body;
@@ -15,7 +21,9 @@ const getGames = async (ctx) => {
 
 const getThisGame = async (ctx) => {
   try {
-    ctx.body = await games.findById(ctx.params.id);
+    const id = ctx.params.id;
+    console.log('IN CONTROLLER ', id);
+    ctx.body = await games.findById(id);
     ctx.status = 200;
     console.log('GET game: successful.', ctx.params.id);
     return ctx.body;

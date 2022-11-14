@@ -29,7 +29,6 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
   const numberOfTeams = [{ value: 1 }, { value: 2 }];
 
   const profile = useContext(UserContext);
-  const today = gameService.getTodayAsDate();
 
   function handlePress() {
     const newGame = {
@@ -63,7 +62,7 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
     if (Platform.OS === 'android') {
       setShow(false);
     }
-    setShow(false);
+    // setShow(false);
     setDate(currentDate);
   };
 
@@ -71,6 +70,7 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
     if (Platform.OS === 'android') {
       setShow(!false);
     }
+    setShow(true);
     setMode(currentMode);
   };
 
@@ -90,9 +90,9 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.container}>
+        <View style={[styles.container, styles.modal]}>
           <View style={styles.container}>
-            <Text>click me ↓</Text>
+            <Text style={{ color: theme.white }}>click me ↓</Text>
             {show && (
               <DateTimePicker
                 testID="dateTimePicker"
@@ -101,6 +101,9 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
                 is24Hour={true}
                 onChange={onChange}
                 minuteInterval={15}
+                textColor="white"
+                accentColor={theme.emerald}
+                themeVariant="dark"
               />
             )}
             <Pressable
@@ -113,7 +116,9 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
               ]}
             >
               <View style={styles.button}>
-                <Text>Select date</Text>
+                <Text style={{ fontFamily: 'GemunuLibreMedium', fontSize: 20 }}>
+                  Select date
+                </Text>
               </View>
             </Pressable>
             <Pressable
@@ -126,12 +131,22 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
               ]}
             >
               <View style={styles.button}>
-                <Text>Select time</Text>
+                <Text style={{ fontFamily: 'GemunuLibreMedium', fontSize: 20 }}>
+                  Select time
+                </Text>
               </View>
             </Pressable>
 
-            <Text style={{ fontSize: 20, marginTop: 20 }}>
-              selected:{' '}
+            <Text
+              style={{
+                fontSize: 20,
+                marginTop: 20,
+                color: theme.white,
+                fontFamily: 'GemunuLibreMedium',
+                textAlign: 'center',
+              }}
+            >
+              selected:{'\n'}
               {Platform.OS === 'android'
                 ? date.toLocaleString().slice(0, -8)
                 : date.toLocaleString().slice(0, -3)}
@@ -146,7 +161,15 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
               ]}
             >
               <View style={styles.button}>
-                <Text style={{ alignItems: 'flex-end' }}>Confirm</Text>
+                <Text
+                  style={{
+                    alignItems: 'flex-end',
+                    fontFamily: 'GemunuLibreMedium',
+                    fontSize: 20,
+                  }}
+                >
+                  Confirm
+                </Text>
               </View>
             </Pressable>
           </View>
@@ -158,12 +181,13 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
         value={description}
         label="description"
         onChangeText={setDescription}
-        placeholder="e.g.'Sunday Kick-about'"
+        placeholder="e.g. 'Sunday Kick-about'"
         maxLength={50}
+        placeholderTextColor={theme.darkGrey}
       />
       <Text style={styles.label}>Date</Text>
       <Pressable style={styles.dateTime} onPress={() => setModalVisible(true)}>
-        <Text>
+        <Text style={{ color: theme.white }}>
           {Platform.OS === 'android'
             ? date.toLocaleString().slice(0, -8)
             : date.toLocaleString().slice(0, -3)}
@@ -178,6 +202,7 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
         placeholder="Where's the game?"
         keyboardType="default"
         maxLength={50}
+        placeholderTextColor={theme.darkGrey}
       />
       <Text style={styles.label}>Max. players per team</Text>
       <TextInput
@@ -186,6 +211,7 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
         label="location"
         onChangeText={setMaxPlayers}
         placeholder="e.g. 14 - (remember to add subs here)"
+        placeholderTextColor={theme.darkGrey}
         keyboardType="numeric"
         maxLength={2}
       />
@@ -200,10 +226,10 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
         dropdownStyles={{
           borderRadius: 30,
           flexGrow: 0,
-          borderColor: theme.onyx,
+          borderColor: theme.darkGrey,
         }}
-        inputStyles={{ color: theme.onyx }}
-        dropdownTextStyles={{ color: theme.onyx }}
+        inputStyles={{ color: theme.white }}
+        dropdownTextStyles={{ color: theme.darkGrey }}
       />
       <Pressable
         onPress={handlePress}
@@ -214,7 +240,9 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
           styles.button,
         ]}
       >
-        <Text>Save</Text>
+        <Text style={{ fontFamily: 'GemunuLibreMedium', fontSize: 20 }}>
+          Save
+        </Text>
       </Pressable>
     </KeyboardAwareScrollView>
   );
@@ -223,10 +251,16 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 5,
+    padding: 0,
+    left: -20,
+    width: '100%',
     marginHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: theme.blackish,
+  },
+  modal: {
+    left: 0,
   },
   h2: {
     fontSize: 20,
@@ -234,11 +268,12 @@ const styles = StyleSheet.create({
   label: {
     paddingTop: 10,
     paddingBottom: 5,
-    marginHorizontal: 20,
+    marginHorizontal: 40,
     fontFamily: 'GemunuLibreBold',
     fontSize: 16,
     alignSelf: 'flex-start',
     letterSpacing: 2,
+    color: theme.gainsboro,
   },
   input: {
     borderWidth: 1,
@@ -247,6 +282,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     height: 50,
     width: 300,
+    color: theme.white,
   },
   dateTime: {
     borderWidth: 1,
@@ -261,7 +297,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     borderWidth: 1,
-    borderColor: '#666',
+    borderColor: theme.darkGrey,
     padding: 10,
     borderRadius: 20,
     height: 50,

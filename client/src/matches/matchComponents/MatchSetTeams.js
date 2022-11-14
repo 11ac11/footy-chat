@@ -4,19 +4,13 @@ import {
   StyleSheet,
   View,
   FlatList,
-  ImageBackground,
   Pressable,
-  SectionList,
-  StatusBar,
 } from 'react-native';
-import React, { useContext, useState } from 'react';
-import Moment from 'moment';
-import { UserContext } from '../../../App';
+import React from 'react';
 import { theme } from '../../theme';
 
-const image = {
-  uri: 'https://i.postimg.cc/DZv8w2Sr/Pitch.png',
-};
+import * as Clipboard from 'expo-clipboard';
+import FullWidthButton from '../../components/FullWidthButton';
 
 const PlayerT1 = (props) => (
   <View style={styles.playerInList}>
@@ -37,7 +31,6 @@ function sortTeams(players, teamSize) {
   const newPlayersArr = [...players];
   if (newPlayersArr.length > teamSize * 2) newPlayersArr.length = teamSize * 2;
 
-  let formation = [3, 3, 1];
   let GK = [];
   let DFs = [];
   let wDFs = [];
@@ -85,60 +78,28 @@ function sortTeams(players, teamSize) {
   return [team1, team2];
 }
 
-// function checkGK(team) {
-//   let GKcount = 0;
-//   for (let i = 0; i < team.length; i++) {
-//     if (team[i].position === 'GK') GKcount++;
-//   }
-//   if (GKcount == 0) {
-//     let random = Math.floor(
-//       Math.random() * (team.length / 2) + team.length / 2
-//     );
-//     // make random function outside both functions
-//     return `WARNING! No GK! ${team[random].name} has been randomly selected to start in goal`;
-//     // change GK selection to move to index[0]
-//   }
-//   return;
-// }
-
 export const MatchSetTeams = ({ navigation, route, playersPool, games }) => {
   const { _id, location, description, date, admin, max_players, players } =
     route.params;
 
-  const [team1, team2] = sortTeams(players, max_players);
+  let [team1, team2] = sortTeams(players, max_players);
 
   const handlePress = () => {
-    sortTeams(players, max_players);
+    console.log(sortTeams(players, max_players));
   };
-  // console.log('team one \n\n', team1, '\n\n');
-  // console.log('team 2 \n\n', team2, '\n\n');
 
-  // console.log(checkGK(team1));
-  // console.log(checkGK(team2));
-
-  // console.log(team1, team2);
-
-  // const GK1 = checkGK(team1);
-  // const GK2 = checkGK(team2);
+  // const copyToClipboard = async () => {
+  //   await Clipboard.setStringAsync('hello world');
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Pressable
-        onPress={handlePress}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? 'white' : '#50C162',
-          },
-          styles.button,
-        ]}
-      >
-        <Text>Save</Text>
-      </Pressable>
+      <FullWidthButton text={'Set Again'} onPress={handlePress} />
       <View style={styles.teamSheetCont}>
         <View style={styles.teamOne}>
           <FlatList
             data={team1}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.name}
             renderItem={({ item }) => (
               <PlayerT1
                 name={item.name}
@@ -217,8 +178,6 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'GemunuLibreBold',
   },
-  playerT1: {},
-
   heading: {
     textAlign: 'center',
     paddingHorizontal: 10,
@@ -228,15 +187,5 @@ const styles = StyleSheet.create({
   },
   whiteText: {
     color: theme.white,
-  },
-  button: {
-    height: 50,
-    width: 300,
-    color: 'white',
-    marginVertical: 20,
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
   },
 });

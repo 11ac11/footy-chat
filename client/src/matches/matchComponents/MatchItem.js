@@ -1,6 +1,7 @@
 //import Moment from 'react-moment';
 import Moment from 'moment';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
+// import { UserContext } from '../../../userContext'; --- TO USE CONTEXT
 import { UserContext } from '../../../App';
 import { useContext } from 'react';
 import { theme } from '../../theme';
@@ -23,7 +24,7 @@ export default function MatchItem({
   return (
     <>
       <Pressable
-        style={styles.gameItem}
+        style={styles.gameItemBox}
         onPress={() =>
           navigation.navigate('Match Details', {
             _id: _id,
@@ -40,25 +41,29 @@ export default function MatchItem({
         }
       >
         <View style={styles.gameDateBox}>
-          <Text style={styles.gameDate}>
-            {Moment(date).format('ddd Do MMM - HH:mm')}
-          </Text>
+          <Text style={styles.gameDate}>{Moment(date).format('ddd')}</Text>
+          <Text style={styles.gameDate}>{Moment(date).format('D')}</Text>
+          <Text style={styles.gameDate}>{Moment(date).format('MMM')}</Text>
         </View>
-        <View style={styles.gameDetailsBox}>
-          <Text style={styles.gameDetails}>{description}</Text>
-          <Text style={styles.gameDetails}>@ {location} </Text>
-        </View>
-
-        <View>
-          {admin === user._id ? (
-            <Text style={[styles.gameDetails, styles.organiser]}>
-              ⭐ You are organising
-            </Text>
-          ) : (
-            <Text style={[styles.gameDetails, styles.organiser]}>
-              Organiser : {admin_name}
-            </Text>
-          )}
+        <View style={styles.infoBox}>
+          <View style={styles.gameDetailsBox}>
+            <Text style={styles.gameDate}>{Moment(date).format('HH:mm')}</Text>
+            <Text style={styles.gameDetails}>@ {location} </Text>
+          </View>
+          <View style={styles.gameDetailsBox}>
+            <Text style={styles.gameDetails}>{description}</Text>
+          </View>
+          <View style={styles.gameDetailsBox}>
+            {admin === user._id ? (
+              <Text style={[styles.gameDetails, styles.organiser]}>
+                ⭐ You are organising
+              </Text>
+            ) : (
+              <Text style={[styles.gameDetails, styles.organiser]}>
+                Organiser : {admin_name}
+              </Text>
+            )}
+          </View>
         </View>
       </Pressable>
     </>
@@ -66,60 +71,60 @@ export default function MatchItem({
 }
 
 const styles = StyleSheet.create({
-  gameItem: {
+  gameItemBox: {
     textDecoration: 'none',
     color: 'inherit',
-    width: '80%',
+    width: '90%',
     margin: 10,
-    borderColor: theme.gainsboro,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    backgroundColor: 'rgba(255,255,255,0.9)',
+    flexDirection: 'row',
+    // borderColor: theme.gainsboro,
+    // borderStyle: 'solid',
+    // borderWidth: 1,
     borderRadius: 20,
   },
 
   gameDateBox: {
-    backgroundColor: theme.mediumGreen,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    backgroundColor: theme.onyx,
+    borderRadius: 10,
+    maxWidth: '20%',
     padding: 10,
     boxSizing: 'border-box',
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center',
+  },
+
+  infoBox: {
+    width: '85%',
+    justifyContent: 'space-between',
+    padding: 5,
+    paddingLeft: 15,
+    paddingRight: 0,
   },
 
   gameDate: {
-    color: theme.white,
+    color: theme.emerald,
     fontFamily: 'GemunuLibreBold',
-    fontSize: 18,
-    letterSpacing: 2,
+    fontSize: 16,
+    letterSpacing: 3,
+    textAlign: 'center',
   },
 
   gameDetailsBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
   },
 
   gameDetails: {
     padding: 0,
-    color: theme.onyx,
+    color: theme.gainsboro,
     fontFamily: 'GemunuLibreMedium',
     letterSpacing: 1,
     fontSize: 16,
   },
 
   organiser: {
-    color: 'grey',
+    color: theme.darkGrey,
     fontSize: 14,
-    padding: 10,
     paddingTop: 0,
-  },
-
-  selectGame: {
-    width: 80,
-    justifyContent: 'center',
-    color: 'inherit',
   },
 });

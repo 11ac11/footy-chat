@@ -6,13 +6,15 @@ import {
   ImageBackground,
   Pressable,
 } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Moment from 'moment';
 import { UserContext } from '../../../App';
 import { theme } from '../../theme';
 
 import { TrashIcon } from '../../components/Icons';
 import { gameService } from '../../services/gameService';
+import FullWidthButton from '../../components/FullWidthButton';
+import PrimaryButton from '../../components/PrimaryButton';
 
 const image = {
   uri: 'https://i.postimg.cc/DZv8w2Sr/Pitch.png',
@@ -25,49 +27,64 @@ const Player = ({ name }) => (
 );
 
 export default function MatchDetails({ navigation, route, setGames }) {
+  let { _id, location, description, date, admin, max_players } = route.params;
   const player = useContext(UserContext);
-  const [playersPool, setPlayers] = useState([players]);
+  const [players, setPlayers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [isPlayerInGame, setIsPlayerInGame] = useState(false);
 
-  const { _id, location, description, date, admin, max_players, players } =
-    route.params;
+  async function fetchPlayers() {
+    try {
+      setLoading(true);
+      const thisGame = await gameService.getThisGame(_id);
+      console.log('this is players: ', thisGame.players);
+      setPlayers(thisGame.players);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-  console.log('CURRENT PLAYER ==========', player.name);
-  // console.log('PLAYERS IN DETAILSVIEW ================', players);
+  useEffect(() => {
+    fetchPlayers();
+  }, []);
 
-  const checkPlayersInGame = players.some((element) => {
-    return element.name == player.name ? true : false;
-  });
+  useEffect(() => setIsPlayerInGame(checkPlayersInGame()), [players]);
+
+  const checkPlayersInGame = function () {
+    return players.some((element) => {
+      return element.name == player.name ? true : false;
+    });
+  };
 
   function addPlayerToGame() {
     gameService
       .addPlayerToGame({ player: player, _id })
       .then((fromDB) => {
-        players.push(fromDB);
+        console.log('fromDb', fromDB);
         setPlayers((prevState) => [fromDB, ...prevState]);
+        setIsPlayerInGame(true);
       })
       .catch((error) => console.log(error));
   }
-
-  ///////////////////////////////////////////////////////////////////////////////////////
-  // TODO -  WHY DOES THIS NOT LIVE UPDATE?!?!?!?
 
   function removePlayerFromGame() {
     gameService
       .removePlayerFromGame({ player: player, _id })
       .then((res) => {
-        setPlayers((playersPool) => {
-          // console.log('prevState: ', prevState);
-          // console.log('players: ', players);
-          // console.log('player to remove: ', player);
-          // // prevState.forEach((el) =>
-          // //   console.log('each player in players list:', el)
-          // // );
-          return playersPool.filter((el) => el != player);
+        setPlayers((prevState) => {
+          return [
+            ...prevState.filter((el) => {
+              console.log('el', el._id, el._id != player._id);
+              return el._id != player._id;
+            }),
+          ];
         });
+        setIsPlayerInGame(false);
       })
       .catch((error) => console.log(error));
   }
-  //////////////////////////////////////////////////////////////////////////////////////
 
   function deleteGame() {
     gameService
@@ -87,7 +104,7 @@ export default function MatchDetails({ navigation, route, setGames }) {
     </Player>
   );
 
-  return (
+  return !loading ? (
     <View style={styles.container}>
       <View style={styles.matchInfo}>
         <View
@@ -110,7 +127,7 @@ export default function MatchDetails({ navigation, route, setGames }) {
             <></>
           )}
         </View>
-        <View style={styles.timeLocation}>
+        <View style={styles.matchDetailsBox}>
           <Text style={styles.matchDetailsText}>
             Max players: {max_players}
           </Text>
@@ -123,42 +140,11 @@ export default function MatchDetails({ navigation, route, setGames }) {
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <View>
           <View style={styles.btnsContainer}>
-            {!checkPlayersInGame ? (
-              <Pressable
-                onPress={addPlayerToGame}
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed ? theme.gainsboro : theme.emerald,
-                  },
-                  styles.button,
-                ]}
-              >
-                <Text>Join</Text>
-              </Pressable>
+            {!isPlayerInGame ? (
+              <FullWidthButton onPress={addPlayerToGame} text={'Join'} />
             ) : (
-              <Pressable
-                onPress={removePlayerFromGame}
-                style={({ pressed }) => [
-                  {
-                    backgroundColor: pressed ? theme.white : theme.gainsboro,
-                  },
-                  styles.button,
-                ]}
-              >
-                <Text style={{ color: theme.red }}>Leave Game</Text>
-              </Pressable>
+              <FullWidthButton onPress={removePlayerFromGame} text={'Leave'} />
             )}
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? theme.emerald : theme.mediumGreen,
-                },
-                styles.button,
-                styles.createAcc,
-              ]}
-            >
-              <Text>Invite</Text>
-            </Pressable>
           </View>
         </View>
         <Text
@@ -181,7 +167,7 @@ export default function MatchDetails({ navigation, route, setGames }) {
         </View>
         {players.length === max_players * 2 ? (
           <View style={styles.sortTeamBtnCont}>
-            <Pressable
+            <PrimaryButton
               onPress={() =>
                 navigation.navigate('Set Teams', {
                   _id,
@@ -192,25 +178,30 @@ export default function MatchDetails({ navigation, route, setGames }) {
                   date,
                   max_players,
                   players,
-                  playersPool,
                   route,
                 })
               }
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? theme.gainsboro : theme.emerald,
-                },
-                styles.setTeamBtn,
-              ]}
-            >
-              <Text>Sort Teams</Text>
-            </Pressable>
+              text={'Set teams'}
+            />
           </View>
         ) : (
           <></>
         )}
       </ImageBackground>
     </View>
+  ) : (
+    <>
+      <View
+        style={{
+          backgroundColor: theme.blackish,
+          flexGrow: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Text style={{ color: theme.darkGrey }}>loading...</Text>
+      </View>
+    </>
   );
 }
 const styles = StyleSheet.create({
@@ -222,10 +213,9 @@ const styles = StyleSheet.create({
   },
   matchInfo: {
     width: '100%',
-    borderBottomWidth: 1,
-    borderColor: theme.gainsboro,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: theme.blackish,
   },
   matchTitle: {
     textAlign: 'center',
@@ -233,24 +223,26 @@ const styles = StyleSheet.create({
     fontSize: 32,
     marginTop: 5,
     letterSpacing: 2,
+    color: theme.white,
   },
   matchDetailsText: {
-    color: theme.onyx,
+    color: theme.emerald,
     fontFamily: 'GemunuLibreMedium',
     margin: 5,
     letterSpacing: 1,
   },
-  timeLocation: {
+  matchDetailsBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     margin: 5,
+    width: '95%',
   },
   teamList: {
     width: '100%',
     alignItems: 'space-between',
   },
   list: {
-    flex: 3,
+    flex: 2.5,
   },
   sortTeamBtnCont: {
     flex: 2,
@@ -261,25 +253,6 @@ const styles = StyleSheet.create({
   btnsContainer: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  button: {
-    // height: 50,
-    // width: 150,
-    flex: 1,
-    // margin: 10,
-    padding: 10,
-    textAlign: 'center',
-    alignItems: 'center',
-    // borderRadius: 20,
-    justifyContent: 'center',
-  },
-  setTeamBtn: {
-    padding: 10,
-    width: 300,
-    textAlign: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
     justifyContent: 'center',
   },
   deletebtn: {

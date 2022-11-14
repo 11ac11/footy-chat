@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
+//import { UserContext } from './userContext';
 
 import { StyleSheet, View, Text } from 'react-native';
 import auth from './utils/auth';
@@ -13,7 +14,7 @@ import 'react-native-gesture-handler';
 import { theme } from './src/theme';
 import Login from './src/screens/Login';
 import { CreateAccount } from './src/components/CreateAccount';
-
+//import { UserContextProvider } from './userContext';
 import { playerService } from './src/services/playerService';
 
 export const UserContext = createContext();
