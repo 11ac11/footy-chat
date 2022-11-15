@@ -1,10 +1,12 @@
-import { useState, useEffect, useContext } from 'react';
-import { Text, ScrollView, StyleSheet, View, Pressable } from 'react-native';
+import { useContext } from 'react';
+import { Text, ScrollView, StyleSheet, View } from 'react-native';
 import { playerService } from '../services/playerService';
 import { UserContext } from '../../App';
+import { Ionicons } from '@expo/vector-icons';
 
 import { theme } from '../theme';
 import FullWidthButton from '../components/FullWidthButton';
+import { Loading } from '../components/Loading';
 //import { UserContext } from '../../userContext';
 
 export const Profile = ({ setIsAuthenticated }) => {
@@ -17,6 +19,12 @@ export const Profile = ({ setIsAuthenticated }) => {
   return profile.name ? (
     <ScrollView contentContainerStyle={styles.container}>
       <FullWidthButton onPress={handlePress} text={'Logout'} />
+      <Ionicons
+        name="person-circle-outline"
+        size={120}
+        color={theme.onyx}
+        style={styles.pic}
+      />
       <View style={styles.infoContainer}>
         <View style={styles.oneLine}>
           <View style={styles.labelsBox}>
@@ -63,18 +71,16 @@ export const Profile = ({ setIsAuthenticated }) => {
       </View>
     </ScrollView>
   ) : (
-    <>
-      <View
-        style={{
-          backgroundColor: theme.blackish,
-          flexGrow: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Text style={{ color: theme.darkGrey }}>loading...</Text>
-      </View>
-    </>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: theme.blackish,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Loading />
+    </View>
   );
 };
 
@@ -84,6 +90,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: theme.blackish,
+  },
+  pic: {
+    paddingTop: 20,
   },
   infoContainer: {
     marginTop: 10,

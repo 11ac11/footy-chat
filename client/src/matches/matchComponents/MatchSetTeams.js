@@ -1,12 +1,5 @@
-import {
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  View,
-  FlatList,
-  Pressable,
-} from 'react-native';
-import React from 'react';
+import { Text, SafeAreaView, StyleSheet, View, FlatList } from 'react-native';
+import React, { useState } from 'react';
 import { theme } from '../../theme';
 
 import * as Clipboard from 'expo-clipboard';
@@ -78,23 +71,22 @@ function sortTeams(players, teamSize) {
   return [team1, team2];
 }
 
-export const MatchSetTeams = ({ navigation, route, playersPool, games }) => {
-  const { _id, location, description, date, admin, max_players, players } =
-    route.params;
+export const MatchSetTeams = ({ route }) => {
+  const { max_players, players } = route.params;
+  const [teamOne, setTeamOne] = useState();
+  const [teamTwo, setTeamTwo] = useState();
 
   let [team1, team2] = sortTeams(players, max_players);
 
   const handlePress = () => {
-    console.log(sortTeams(players, max_players));
+    sortTeams(players, max_players);
+    setTeamOne(team1);
+    setTeamTwo(team2);
   };
-
-  // const copyToClipboard = async () => {
-  //   await Clipboard.setStringAsync('hello world');
-  // };
 
   return (
     <SafeAreaView style={styles.container}>
-      <FullWidthButton text={'Set Again'} onPress={handlePress} />
+      <FullWidthButton text={'Sort Again'} onPress={handlePress} />
       <View style={styles.teamSheetCont}>
         <View style={styles.teamOne}>
           <FlatList

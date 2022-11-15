@@ -7,7 +7,5 @@ export const theme = {
   onyx: '#3D3D3D',
   blackish: '#2a2a2a',
   white: '#FFF',
-  //red: '#E35335',
-  // red: '#FF0035',
-  red: '#b31b1b',
+  red: '#C13333',
 };

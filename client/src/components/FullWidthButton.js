@@ -15,7 +15,7 @@ export default function FullWidthButton({
         text == 'Leave'
           ? [
               {
-                backgroundColor: pressed ? theme.gainsboro : theme.darkGrey,
+                backgroundColor: pressed ? theme.gainsboro : theme.red,
               },
               styles.button,
             ]

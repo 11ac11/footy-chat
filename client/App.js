@@ -16,6 +16,11 @@ import Login from './src/screens/Login';
 import { CreateAccount } from './src/components/CreateAccount';
 //import { UserContextProvider } from './userContext';
 import { playerService } from './src/services/playerService';
+// import io from 'socket.io-client';
+
+// const socket = io();
+
+console.disableYellowBox = true;
 
 export const UserContext = createContext();
 

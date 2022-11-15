@@ -16,6 +16,7 @@ export default function MatchItem({
   admin_name,
   max_players,
   players,
+  teams,
   games,
   setGames,
 }) {
@@ -35,6 +36,7 @@ export default function MatchItem({
             date: date,
             max_players: max_players,
             players: players,
+            teams,
             games,
             setGames,
           })
@@ -48,18 +50,18 @@ export default function MatchItem({
         <View style={styles.infoBox}>
           <View style={styles.gameDetailsBox}>
             <Text style={styles.gameDate}>{Moment(date).format('HH:mm')}</Text>
-            <Text style={styles.gameDetails}>@ {location} </Text>
+            <Text style={styles.gameLocationText}>@ {location} </Text>
           </View>
           <View style={styles.gameDetailsBox}>
-            <Text style={styles.gameDetails}>{description}</Text>
+            <Text style={styles.gameNameText}>{description}</Text>
           </View>
           <View style={styles.gameDetailsBox}>
             {admin === user._id ? (
-              <Text style={[styles.gameDetails, styles.organiser]}>
+              <Text style={[styles.gameNameText, styles.organiser]}>
                 ⭐ You are organising
               </Text>
             ) : (
-              <Text style={[styles.gameDetails, styles.organiser]}>
+              <Text style={[styles.gameNameText, styles.organiser]}>
                 Organiser : {admin_name}
               </Text>
             )}
@@ -72,35 +74,22 @@ export default function MatchItem({
 
 const styles = StyleSheet.create({
   gameItemBox: {
-    textDecoration: 'none',
-    color: 'inherit',
-    width: '90%',
-    margin: 10,
+    width: '100%',
     flexDirection: 'row',
-    // borderColor: theme.gainsboro,
-    // borderStyle: 'solid',
-    // borderWidth: 1,
+    alignItems: 'center',
     borderRadius: 20,
+    paddingHorizontal: 15,
+    height: 80,
+    marginBottom: 10,
   },
-
   gameDateBox: {
     backgroundColor: theme.onyx,
     borderRadius: 10,
     maxWidth: '20%',
     padding: 10,
-    boxSizing: 'border-box',
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  infoBox: {
-    width: '85%',
-    justifyContent: 'space-between',
-    padding: 5,
-    paddingLeft: 15,
-    paddingRight: 0,
-  },
-
   gameDate: {
     color: theme.emerald,
     fontFamily: 'GemunuLibreBold',
@@ -108,23 +97,34 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
     textAlign: 'center',
   },
-
+  infoBox: {
+    width: '85%',
+    justifyContent: 'space-between',
+    padding: 5,
+    paddingLeft: 15,
+    paddingRight: 0,
+  },
   gameDetailsBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-
-  gameDetails: {
+  gameNameText: {
+    padding: 0,
+    color: theme.gainsboro,
+    fontFamily: 'GemunuLibreBold',
+    letterSpacing: 1,
+    fontSize: 20,
+  },
+  gameLocationText: {
     padding: 0,
     color: theme.gainsboro,
     fontFamily: 'GemunuLibreMedium',
     letterSpacing: 1,
-    fontSize: 16,
+    fontSize: 14,
   },
-
   organiser: {
     color: theme.darkGrey,
     fontSize: 14,
-    paddingTop: 0,
+    paddingVertical: 5,
   },
 });

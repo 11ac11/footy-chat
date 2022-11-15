@@ -1,46 +1,47 @@
-import { View, Text, Pressable } from 'react-native';
-import React, { useLayoutEffect, useState } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { styles } from '../utils/styles';
+import { theme } from '../theme';
+import Moment from 'moment';
 
-const ChatComponent = ({ item }) => {
+export const ChatComponent = ({ item }) => {
   const navigation = useNavigation();
   const [messages, setMessages] = useState({});
 
-  //👇🏻 Retrieves the last message in the array from the item prop
-  useLayoutEffect(() => {
-    setMessages(item.messages[item.messages.length - 1]);
-  }, []);
+  useEffect(() => {
+    item.messages ? setMessages(item.messages[item.messages.length - 1]) : {};
+  }, [messages]);
 
-  ///👇🏻 Navigates to the Messaging screen
   const handleNavigation = () => {
     navigation.navigate('Messaging', {
-      id: item.id,
+      _id: item._id,
       name: item.name,
     });
   };
 
   return (
-    <Pressable style={styles.cchat} onPress={handleNavigation}>
+    <Pressable style={styles.chatItemContainer} onPress={handleNavigation}>
       <Ionicons
         name="person-circle-outline"
         size={45}
-        color="black"
-        style={styles.cavatar}
+        color={theme.emerald}
+        style={styles.chatImg}
       />
 
-      <View style={styles.crightContainer}>
+      <View style={styles.chatDetailsContainer}>
         <View>
-          <Text style={styles.cusername}>{item.name}</Text>
+          <Text style={styles.chatNameText}>{item.name}</Text>
 
-          <Text style={styles.cmessage}>
-            {messages?.text ? messages.text : 'Tap to start chatting'}
+          <Text style={styles.msgPreview}>
+            {messages?.text
+              ? `${messages.user}: ${messages.text}`
+              : 'Tap to start chatting'}
           </Text>
         </View>
         <View>
-          <Text style={styles.ctime}>
-            {messages?.time ? messages.time : 'now'}
+          <Text style={styles.msgPreviewTime}>
+            {messages?.time ? Moment(messages.time).format('HH:mm') : 'now'}
           </Text>
         </View>
       </View>
@@ -48,4 +49,41 @@ const ChatComponent = ({ item }) => {
   );
 };
 
-export default ChatComponent;
+const styles = StyleSheet.create({
+  chatItemContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    height: 80,
+    marginBottom: 10,
+  },
+  chatImg: {
+    marginRight: 15,
+  },
+  chatNameText: {
+    fontSize: 20,
+    marginBottom: 5,
+    color: theme.gainsboro,
+    fontFamily: 'GemunuLibreBold',
+    letterSpacing: 1,
+  },
+  msgPreview: {
+    fontSize: 14,
+    fontFamily: 'GemunuLibreBold',
+    color: theme.darkGrey,
+    letterSpacing: 1,
+  },
+  chatDetailsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  msgPreviewTime: {
+    opacity: 0.5,
+    color: theme.emerald,
+    fontFamily: 'GemunuLibreMedium',
+    letterSpacing: 1,
+  },
+});

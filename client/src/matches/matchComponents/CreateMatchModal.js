@@ -45,7 +45,6 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
     gameService
       .postGame(newGame)
       .then((eventFromDB) => {
-        console.log('this is event from dB', eventFromDB);
         setGames((prevState) =>
           [eventFromDB, ...prevState].sort(
             (a, b) => new Date(a.date) - new Date(b.date)
@@ -307,7 +306,7 @@ const styles = StyleSheet.create({
   button: {
     height: 50,
     width: 300,
-    color: 'white',
+    color: theme.white,
     marginVertical: 20,
     textAlign: 'center',
     alignItems: 'center',

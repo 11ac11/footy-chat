@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Text,
-  View,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  Pressable,
-} from 'react-native';
+import { Text, StyleSheet, TextInput, Pressable } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import SelectList from 'react-native-dropdown-select-list';
 
@@ -189,12 +182,14 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 5,
+    marginTop: 20,
     marginHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   closebtn: {
     padding: 10,
+    paddingTop: 20,
     alignSelf: 'flex-end',
   },
   label: {

@@ -16,6 +16,7 @@ export const MatchList = ({ navigation, games, setGames }) => {
             admin={game.admin}
             admin_name={game.admin_name}
             max_players={game.max_players}
+            teams={game.teams}
             players={game.players}
             setGames={setGames}
           />
@@ -31,5 +32,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    paddingTop: 10,
   },
 });

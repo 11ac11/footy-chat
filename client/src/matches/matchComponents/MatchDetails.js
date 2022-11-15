@@ -15,6 +15,7 @@ import { TrashIcon } from '../../components/Icons';
 import { gameService } from '../../services/gameService';
 import FullWidthButton from '../../components/FullWidthButton';
 import PrimaryButton from '../../components/PrimaryButton';
+import { Loading } from '../../components/Loading';
 
 const image = {
   uri: 'https://i.postimg.cc/DZv8w2Sr/Pitch.png',
@@ -27,7 +28,8 @@ const Player = ({ name }) => (
 );
 
 export default function MatchDetails({ navigation, route, setGames }) {
-  let { _id, location, description, date, admin, max_players } = route.params;
+  let { _id, location, description, date, admin, max_players, teams } =
+    route.params;
   const player = useContext(UserContext);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -37,7 +39,6 @@ export default function MatchDetails({ navigation, route, setGames }) {
     try {
       setLoading(true);
       const thisGame = await gameService.getThisGame(_id);
-      console.log('this is players: ', thisGame.players);
       setPlayers(thisGame.players);
     } catch (error) {
       console.log(error);
@@ -109,13 +110,17 @@ export default function MatchDetails({ navigation, route, setGames }) {
       <View style={styles.matchInfo}>
         <View
           style={{
-            flexDirection: 'row',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
           }}
         >
           <Text style={styles.matchTitle}>{description}</Text>
+          <Text style={styles.matchDetailsTime}>
+            {Moment(date).format('ddd Do MMM - HH:mm')}
+          </Text>
+
           {player._id === admin ? (
             <Pressable
               onPress={deleteGame}
@@ -129,12 +134,9 @@ export default function MatchDetails({ navigation, route, setGames }) {
         </View>
         <View style={styles.matchDetailsBox}>
           <Text style={styles.matchDetailsText}>
-            Max players: {max_players}
+            Max players: {teams === 2 ? max_players * 2 : max_players}
           </Text>
           <Text style={styles.matchDetailsText}>@ {location}</Text>
-          <Text style={styles.matchDetailsText}>
-            {Moment(date).format('ddd Do MMM - HH:mm')}
-          </Text>
         </View>
       </View>
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
@@ -191,16 +193,7 @@ export default function MatchDetails({ navigation, route, setGames }) {
     </View>
   ) : (
     <>
-      <View
-        style={{
-          backgroundColor: theme.blackish,
-          flexGrow: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Text style={{ color: theme.darkGrey }}>loading...</Text>
-      </View>
+      <Loading />
     </>
   );
 }
@@ -219,16 +212,20 @@ const styles = StyleSheet.create({
   },
   matchTitle: {
     textAlign: 'center',
-    fontFamily: 'GemunuLibreMedium',
+    fontFamily: 'GemunuLibreBold',
     fontSize: 32,
     marginTop: 5,
     letterSpacing: 2,
     color: theme.white,
   },
   matchDetailsText: {
+    color: theme.gainsboro,
+    fontFamily: 'GemunuLibreMedium',
+    letterSpacing: 1,
+  },
+  matchDetailsTime: {
     color: theme.emerald,
     fontFamily: 'GemunuLibreMedium',
-    margin: 5,
     letterSpacing: 1,
   },
   matchDetailsBox: {
@@ -271,7 +268,7 @@ const styles = StyleSheet.create({
   },
   name: {
     textAlign: 'center',
-    fontFamily: 'GemunuLibreMedium',
+    fontFamily: 'GemunuLibreBold',
   },
   image: {
     height: '100%',

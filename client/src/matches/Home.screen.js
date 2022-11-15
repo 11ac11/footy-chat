@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  Pressable,
-  ImageBackground,
-} from 'react-native';
+import React from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
 import { MatchList } from './matchComponents/MatchList';
 import { theme } from '../theme';
-import { gameService } from '../services/gameService';
 import FullWidthButton from '../components/FullWidthButton';
+import { Loading } from '../components/Loading';
 
 export const Home = ({ navigation, games, setGames }) => {
   return (

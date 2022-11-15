@@ -3,8 +3,11 @@ import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { UserContext } from '../../App';
 import { theme } from '../theme';
-import { Profile } from '../profile/Profile.screen';
-import { Messages } from './Messages.screen';
+import { Chat } from './Chat';
+import io from 'socket.io-client';
+import { Messaging } from './Messaging';
+
+import socket from '../../utils/socket';
 
 const Stack = createStackNavigator();
 
@@ -30,16 +33,14 @@ export const MessageStack = ({ navigation, setIsAuthenticated }) => {
         },
       }}
     >
-      <Stack.Screen name="Messages">
-        {(props) => (
-          <Messages {...props} setIsAuthenticated={setIsAuthenticated} />
-        )}
-      </Stack.Screen>
-      <Stack.Screen name="Messaging">
-        {(props) => (
-          <Messaging {...props} setIsAuthenticated={setIsAuthenticated} />
-        )}
-      </Stack.Screen>
+      <Stack.Screen
+        name="Chat"
+        component={Chat}
+        options={{
+          title: 'Chats',
+        }}
+      />
+      <Stack.Screen name="Messaging" component={Messaging} />
     </Stack.Navigator>
   );
 };

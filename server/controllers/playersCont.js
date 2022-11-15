@@ -75,18 +75,17 @@ const postPlayer = async (ctx) => {
 
 const login = async (ctx) => {
   try {
-    console.log('hitting login?');
     const { email, password } = ctx.request.body;
     const existingUser = await players.findOne({ email: email });
     if (!existingUser) {
       ctx.body = JSON.stringify({
-        status: "Email doesn't exist",
+        status:
+          "Sorry, this email isn't registered. Create an account instead.",
         isLoggedIn: false,
       });
       return;
     }
     if (await bcrypt.compare(password, existingUser.password)) {
-      console.log('hitting password?');
       const expiry = new Date();
       expiry.setMonth(expiry.getMonth() + 1);
 
@@ -104,7 +103,7 @@ const login = async (ctx) => {
       });
     } else {
       ctx.body = JSON.stringify({
-        status: 'Incorrect password',
+        status: 'Your username or password is incorrect.',
         isLoggedIn: false,
       });
     }

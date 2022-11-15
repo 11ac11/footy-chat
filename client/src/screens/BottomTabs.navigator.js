@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Messages } from '../messages/Messages.screen';
-import { Teams } from './Teams.screen';
 import { MatchStack } from '../matches/MatchStack.navigator';
 import {
   HomeIcon,
