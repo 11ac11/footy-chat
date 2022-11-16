@@ -13,11 +13,19 @@ import { Loading } from '../components/Loading';
 
 export const Chat = () => {
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [rooms, setRooms] = useState([]);
 
   async function fetchGroups() {
-    const groups = await messageService.getMessageGroups();
-    setRooms(groups);
+    try {
+      setLoading(true);
+      const groups = await messageService.getMessageGroups();
+      setRooms(groups);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   }
   useEffect(() => {
     fetchGroups();
@@ -32,12 +40,6 @@ export const Chat = () => {
     });
   }, [socket]);
 
-  // useEffect(() => {
-  //   socket.on('roomsListUpdate', (newRoom) => {
-  //     setRooms(newRoom);
-  //   });
-  // }, [socket]);
-
   return (
     <>
       {visible ? <Modal setVisible={setVisible} setRooms={setRooms} /> : ''}
@@ -46,6 +48,7 @@ export const Chat = () => {
         <View>
           {rooms.length > 0 ? (
             <FlatList
+              style={styles.chatList}
               data={rooms}
               renderItem={({ item }) => <ChatComponent item={item} />}
               keyExtractor={(item) => item._id}
@@ -63,8 +66,11 @@ export const Chat = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 0,
     backgroundColor: theme.blackish,
+  },
+  chatList: {
+    height: '90%',
   },
   chatListEmpty: {
     width: '100%',

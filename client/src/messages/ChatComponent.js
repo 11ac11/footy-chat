@@ -81,6 +81,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   msgPreviewTime: {
+    position: 'absolute',
+    right: 5,
     opacity: 0.5,
     color: theme.emerald,
     fontFamily: 'GemunuLibreMedium',

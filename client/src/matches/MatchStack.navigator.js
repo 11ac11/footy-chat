@@ -12,10 +12,18 @@ const Stack = createStackNavigator();
 
 export const MatchStack = ({ navigation }) => {
   const [games, setGames] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function fetchGames() {
-    const games = await gameService.getGames();
-    setGames(games.sort((a, b) => new Date(a.date) - new Date(b.date)));
+    try {
+      setLoading(true);
+      const games = await gameService.getGames();
+      setGames(games.sort((a, b) => new Date(a.date) - new Date(b.date)));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {

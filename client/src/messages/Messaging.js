@@ -36,23 +36,27 @@ export const Messaging = ({ route, navigation }) => {
       timestamp: new Date(),
     });
     setMessage('');
-    flatlistRef.current.scrollToEnd({ animating: true });
+    chatMessages[0] ? flatlistRef.current.scrollToEnd({ animating: true }) : '';
   };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      keyboardVerticalOffset={Platform.OS == 'ios' ? 80 : -200}
-      behavior={Platform.OS == 'ios' ? 'padding' : 'padding'}
+      keyboardVerticalOffset={Platform.OS == 'ios' ? 90 : -60}
+      behavior="padding"
     >
       <View
         style={[
-          styles.messageListContainer,
-          { paddingVertical: 15, paddingHorizontal: 10 },
+          Platform.OS == 'ios'
+            ? (styles.messageListContainer,
+              { paddingVertical: 15, paddingHorizontal: 10 })
+            : (styles.messageListContainer,
+              { paddingVertical: 20, paddingHorizontal: 10 }),
         ]}
       >
         {chatMessages[0] ? (
           <FlatList
+            style={styles.messageList}
             ref={flatlistRef}
             data={chatMessages}
             renderItem={({ item }) => (
@@ -62,7 +66,26 @@ export const Messaging = ({ route, navigation }) => {
             _id={_id}
           />
         ) : (
-          ''
+          <View
+            style={[
+              styles.messageListContainer,
+              {
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '90%',
+              },
+            ]}
+          >
+            <Text
+              style={{
+                color: theme.onyx,
+                fontSize: 15,
+                fontFamily: 'GemunuLibreBold',
+              }}
+            >
+              Send a message and start chatting!
+            </Text>
+          </View>
         )}
       </View>
 
@@ -103,14 +126,16 @@ const styles = StyleSheet.create({
   },
   messageListContainer: {
     backgroundColor: theme.blackish,
-    marginBottom: 50,
+  },
+  messageList: {
+    height: '90%',
   },
   messaginginputContainer: {
-    position: 'relative',
-    bottom: 50,
     width: '100%',
     paddingHorizontal: 15,
     flexDirection: 'row',
+    position: 'relative',
+    bottom: 0,
     zIndex: 10,
     backgroundColor: theme.blackish,
   },

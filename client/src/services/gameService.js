@@ -1,4 +1,4 @@
-const url = 'http://192.168.0.12:3000/games';
+const url = 'http://192.168.1.185:3000/games';
 
 // home: 192.168.0.12
 // codeworks: 192.168.1.185
@@ -25,7 +25,6 @@ export const gameService = {
     }
   },
   getThisGame: async function (id) {
-    console.log('IN SERVICE: ', id);
     try {
       const response = await fetch(`${url}/${id}`);
       return await response.json();
