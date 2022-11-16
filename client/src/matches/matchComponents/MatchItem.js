@@ -74,7 +74,7 @@ export default function MatchItem({
 
 const styles = StyleSheet.create({
   gameItemBox: {
-    width: '100%',
+    width: '99%',
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 20,

@@ -1,14 +1,13 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { MatchList } from './matchComponents/MatchList';
 import { theme } from '../theme';
 import FullWidthButton from '../components/FullWidthButton';
-import { Loading } from '../components/Loading';
 
 export const Home = ({ navigation, games, setGames }) => {
   return (
     <>
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.container}>
         <FullWidthButton
           text={'Add Match'}
           onPress={() => navigation.navigate('Create Match')}
@@ -16,7 +15,7 @@ export const Home = ({ navigation, games, setGames }) => {
           //navigation={navigation}
         />
         <MatchList navigation={navigation} games={games} />
-      </ScrollView>
+      </View>
     </>
   );
 };

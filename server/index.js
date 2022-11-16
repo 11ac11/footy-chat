@@ -75,7 +75,6 @@ io.on('connection', (socket) => {
     socket.to(filterRes[0].name).emit('roomMessage', parsedResponse);
     filterRes[0].messages.push(parsedResponse);
 
-    // MIGHT NEED TO CHEC THE RESULT VAR BELOW
     socket.emit('roomsListUpdate', result);
     socket.emit('foundRoom', filterRes[0].messages);
   });

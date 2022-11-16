@@ -26,14 +26,6 @@ export const playerService = {
       console.log('ERROR: playerService: _GET_: ', error);
     }
   },
-  // getThisPlayer: async function (id) {
-  //   try {
-  //     const response = await fetch(`${url}/players/${id}`);
-  //     return await response.json();
-  //   } catch (error) {
-  //     console.log('ERROR: gameService: _GET_ONE_: ', error);
-  //   }
-  // },
   getPlayerByEmail: async function (email) {
     try {
       const response = await fetch(`${url}/players/${email}`);

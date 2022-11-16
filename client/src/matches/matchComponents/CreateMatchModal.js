@@ -14,6 +14,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { UserContext } from '../../../App';
 import { gameService } from '../../services/gameService';
 import { theme } from '../../theme';
+import PrimaryButton from '../../components/PrimaryButton';
 
 export const CreateMatchModal = ({ navigation, setGames }) => {
   const [description, setDescription] = useState('');
@@ -61,7 +62,6 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
     if (Platform.OS === 'android') {
       setShow(false);
     }
-    // setShow(false);
     setDate(currentDate);
   };
 
@@ -105,36 +105,16 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
                 themeVariant="dark"
               />
             )}
-            <Pressable
+            <PrimaryButton
               onPress={showDatepicker}
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? 'white' : 'lightgrey',
-                },
-                styles.button,
-              ]}
-            >
-              <View style={styles.button}>
-                <Text style={{ fontFamily: 'GemunuLibreMedium', fontSize: 20 }}>
-                  Select date
-                </Text>
-              </View>
-            </Pressable>
-            <Pressable
+              text={'Select date'}
+              mainColor={theme.darkGrey}
+            />
+            <PrimaryButton
               onPress={showTimepicker}
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? 'white' : 'lightgrey',
-                },
-                styles.button,
-              ]}
-            >
-              <View style={styles.button}>
-                <Text style={{ fontFamily: 'GemunuLibreMedium', fontSize: 20 }}>
-                  Select time
-                </Text>
-              </View>
-            </Pressable>
+              text={'Select time'}
+              mainColor={theme.darkGrey}
+            />
 
             <Text
               style={{
@@ -150,27 +130,10 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
                 ? date.toLocaleString().slice(0, -8)
                 : date.toLocaleString().slice(0, -3)}
             </Text>
-            <Pressable
+            <PrimaryButton
               onPress={() => setModalVisible(!modalVisible)}
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? 'lightgrey' : '#50C162',
-                },
-                styles.button,
-              ]}
-            >
-              <View style={styles.button}>
-                <Text
-                  style={{
-                    alignItems: 'flex-end',
-                    fontFamily: 'GemunuLibreMedium',
-                    fontSize: 20,
-                  }}
-                >
-                  Confirm
-                </Text>
-              </View>
-            </Pressable>
+              text={'Confirm'}
+            />
           </View>
         </View>
       </Modal>
@@ -230,19 +193,7 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
         inputStyles={{ color: theme.white }}
         dropdownTextStyles={{ color: theme.darkGrey }}
       />
-      <Pressable
-        onPress={handlePress}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? 'white' : '#50C162',
-          },
-          styles.button,
-        ]}
-      >
-        <Text style={{ fontFamily: 'GemunuLibreMedium', fontSize: 20 }}>
-          Save
-        </Text>
-      </Pressable>
+      <PrimaryButton onPress={handlePress} text={'Save'} />
     </KeyboardAwareScrollView>
   );
 };
@@ -302,15 +253,5 @@ const styles = StyleSheet.create({
     height: 50,
     width: 300,
     alignItems: 'center',
-  },
-  button: {
-    height: 50,
-    width: 300,
-    color: theme.white,
-    marginVertical: 20,
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
   },
 });

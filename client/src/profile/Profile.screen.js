@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Text, ScrollView, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import { playerService } from '../services/playerService';
 import { UserContext } from '../../App';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,7 +7,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../theme';
 import FullWidthButton from '../components/FullWidthButton';
 import { Loading } from '../components/Loading';
-//import { UserContext } from '../../userContext';
 
 export const Profile = ({ setIsAuthenticated }) => {
   const profile = useContext(UserContext);
@@ -17,7 +16,7 @@ export const Profile = ({ setIsAuthenticated }) => {
     setIsAuthenticated(false);
   };
   return profile.name ? (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <FullWidthButton onPress={handlePress} text={'Logout'} />
       <Ionicons
         name="person-circle-outline"
@@ -69,7 +68,7 @@ export const Profile = ({ setIsAuthenticated }) => {
           <Text style={styles.value}>{profile.team}</Text>
         </View>
       </View>
-    </ScrollView>
+    </View>
   ) : (
     <View
       style={{

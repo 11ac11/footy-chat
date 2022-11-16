@@ -22,10 +22,9 @@ const getGames = async (ctx) => {
 const getThisGame = async (ctx) => {
   try {
     const id = ctx.params.id;
-    console.log('IN CONTROLLER ', id);
     ctx.body = await games.findById(id);
     ctx.status = 200;
-    console.log('GET game: successful.', ctx.params.id);
+    console.log('GET game: successful.', id);
     return ctx.body;
   } catch (error) {
     console.log('ERROR in get @ games controller', error);

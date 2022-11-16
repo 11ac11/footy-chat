@@ -139,7 +139,11 @@ export default function MatchDetails({ navigation, route, setGames }) {
           <Text style={styles.matchDetailsText}>@ {location}</Text>
         </View>
       </View>
-      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+      <ImageBackground
+        source={require('../../../assets/Pitch.png')}
+        resizeMode="cover"
+        style={styles.image}
+      >
         <View>
           <View style={styles.btnsContainer}>
             {!isPlayerInGame ? (

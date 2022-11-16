@@ -7,6 +7,8 @@ export default function PrimaryButton({
   setGames,
   text,
   onPress,
+  mainColor,
+  pressedColor,
 }) {
   return (
     <Pressable
@@ -15,14 +17,18 @@ export default function PrimaryButton({
         text == 'Create Account'
           ? [
               {
-                backgroundColor: pressed ? theme.gainsboro : theme.white,
+                backgroundColor: pressed
+                  ? pressedColor || theme.gainsboro
+                  : mainColor || theme.white,
               },
               styles.button,
               { marginTop: 200 },
             ]
           : [
               {
-                backgroundColor: pressed ? theme.gainsboro : theme.emerald,
+                backgroundColor: pressed
+                  ? pressedColor || theme.gainsboro
+                  : mainColor || theme.emerald,
               },
               styles.button,
             ]

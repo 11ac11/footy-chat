@@ -69,5 +69,3 @@ export const styles = StyleSheet.create({
     borderTopWidth: 0,
   },
 });
-
-// https://reactnavigation.org/docs/bottom-tab-navigator

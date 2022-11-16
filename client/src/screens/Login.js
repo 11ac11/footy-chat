@@ -2,64 +2,40 @@ import React, { useState } from 'react';
 import auth from '../../utils/auth';
 import { playerService } from './../services/playerService';
 import { TextInput } from 'react-native-gesture-handler';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-import {
-  StyleSheet,
-  View,
-  useEffect,
-  Text,
-  ImageBackground,
-} from 'react-native';
+import { StyleSheet, View, Text, ImageBackground } from 'react-native';
 import { theme } from '../theme';
 import PrimaryButton from '../components/PrimaryButton';
 
-// const initialState = {
-//   email: '',
-//   password: '',
-// };
-
-const Login = ({
-  setIsAuthenticated,
-  isAuthenticated,
-  navigation,
-  setUserEmail,
-}) => {
+const Login = ({ setIsAuthenticated, navigation, setUserEmail }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
-    // Add logic to send a request to API service /login
     const { name, value } = e.target;
 
     const res = await playerService.login({ email, password });
     if (!res.isLoggedIn) {
       alert(res.status);
     } else {
-      // This sets isAuthenticated = true and redirects to profile
       setIsAuthenticated(true);
       setUserEmail(email);
       auth.login(() => {});
     }
   };
 
-  // const validateForm = () => {
-  //   return !state.email || !state.password;
-  // };
-
-  const image = {
-    uri: 'https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1338&q=80',
-  };
-
   return (
     <View style={styles.login}>
-      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+      <ImageBackground
+        source={require('../../assets/HomeWPBW500x3.jpg')}
+        resizeMode="cover"
+        style={styles.image}
+      >
         <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.input}
           type="text"
           placeholder="name@mail.com"
           name="email"
-          //value={state.email}
           onChangeText={setEmail}
           keyboardType="email-address"
           autoCorrect={false}
@@ -70,7 +46,6 @@ const Login = ({
           type="password"
           placeholder="password"
           name="password"
-          //value={state.password}
           onChangeText={setPassword}
           secureTextEntry={true}
           autoCorrect={false}
@@ -86,12 +61,6 @@ const Login = ({
 };
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: theme.emerald,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
   image: {
     flex: 1,
     width: '100%',

@@ -1,34 +1,6 @@
-// import { StyleSheet } from 'react-native';
-// import { HomeIcon } from './Icons';
-
-// export default function Loading() {
-//   const spinAnim = useRef(new Animated.Value(0)).current  // Initial value for opacity: 0
-
-//   useEffect(() => {
-//     Animated.timing(
-//       spinAnim,
-//       {
-//         toValue: 1,
-//         duration: 10000,
-//       }
-//     ).start();
-//   }, [spinAnim])
-//   return <HomeIcon color={color}/>;
-// }
-
-// import React in our code
 import React from 'react';
 
-// import all the components we are going to use
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Animated,
-  Easing,
-  TouchableHighlight,
-  Text,
-} from 'react-native';
+import { SafeAreaView, View, Animated, Easing } from 'react-native';
 import { HomeIcon } from './Icons';
 
 export const Loading = () => {

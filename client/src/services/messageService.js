@@ -31,7 +31,6 @@ export const messageService = {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(group),
       });
-      console.log(await posted.json());
       return await posted.json();
     } catch (error) {
       console.log('ERROR: messageService: _POST_: ', error);

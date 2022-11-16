@@ -30,7 +30,6 @@ const getMessageGroups = async (ctx) => {
 const getMessageGroupById = async (ctx) => {
   try {
     const id = ctx.params.id;
-    console.log('IN CONTROLLER ', id);
     ctx.body = await messageGroups.findById(id);
     ctx.status = 200;
     console.log('GET game: successful.', ctx.params.id);
@@ -44,7 +43,7 @@ const getMessageGroupById = async (ctx) => {
 
 const postMessage = async (ctx) => {
   try {
-    const postedMessage = await messages.create(ctx.request.body); //change func names
+    const postedMessage = await messages.create(ctx.request.body);
     ctx.status = 201;
     console.log(`${postedMessage.text} has been posted`);
     return (ctx.body = postedMessage);
@@ -57,8 +56,7 @@ const postMessage = async (ctx) => {
 
 const postMessageGroup = async (ctx) => {
   try {
-    console.log(ctx.request.body);
-    const postedGroup = await messageGroups.create(ctx.request.body); //change func names
+    const postedGroup = await messageGroups.create(ctx.request.body);
     ctx.status = 201;
     console.log(`${postedGroup.name} has been posted`);
     return (ctx.body = postedGroup);

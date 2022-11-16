@@ -5,7 +5,7 @@ const key = 'not very secure key';
 
 const getPlayers = async (ctx) => {
   try {
-    ctx.body = await players.find({}); //change func names
+    ctx.body = await players.find({});
     ctx.status = 200;
     console.log('GET players: successful.');
     return ctx.body;

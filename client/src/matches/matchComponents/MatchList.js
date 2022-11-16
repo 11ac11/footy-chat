@@ -1,26 +1,31 @@
 import MatchItem from './MatchItem';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 
 export const MatchList = ({ navigation, games, setGames }) => {
   return (
     <>
       <View style={styles.container}>
-        {games.map((game) => (
-          <MatchItem
-            navigation={navigation}
-            key={game._id}
-            _id={game._id}
-            description={game.description}
-            location={game.location}
-            date={game.date}
-            admin={game.admin}
-            admin_name={game.admin_name}
-            max_players={game.max_players}
-            teams={game.teams}
-            players={game.players}
-            setGames={setGames}
-          />
-        ))}
+        <FlatList
+          style={styles.chatList}
+          data={games}
+          renderItem={({ item }) => (
+            <MatchItem
+              navigation={navigation}
+              key={item._id}
+              _id={item._id}
+              description={item.description}
+              location={item.location}
+              date={item.date}
+              admin={item.admin}
+              admin_name={item.admin_name}
+              max_players={item.max_players}
+              teams={item.teams}
+              players={item.players}
+              setGames={setGames}
+            />
+          )}
+          keyExtractor={(item) => item._id}
+        />
       </View>
     </>
   );
