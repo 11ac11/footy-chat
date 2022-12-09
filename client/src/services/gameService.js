@@ -1,12 +1,9 @@
-const url = 'http://192.168.1.185:3000/games';
-
-// home: 192.168.0.12
-// codeworks: 192.168.1.185
+const url = ''; // http://<yourIP>:<port>
 
 export const gameService = {
   postGame: async (game) => {
     try {
-      const posted = await fetch(`${url}/new`, {
+      const posted = await fetch(`${url}/games/new`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(game),
@@ -18,7 +15,7 @@ export const gameService = {
   },
   getGames: async function () {
     try {
-      const response = await fetch(url);
+      const response = await fetch(`${url}/games`);
       return await response.json();
     } catch (error) {
       console.log('ERROR: gameService: _GET_: ', error);
@@ -26,7 +23,7 @@ export const gameService = {
   },
   getThisGame: async function (id) {
     try {
-      const response = await fetch(`${url}/${id}`);
+      const response = await fetch(`${url}/games/${id}`);
       return await response.json();
     } catch (error) {
       console.log('ERROR: gameService: _GET_ONE_: ', error);
@@ -34,7 +31,7 @@ export const gameService = {
   },
   deleteThisGame: async function (id) {
     try {
-      const response = await fetch(`${url}/${id}/delete`, {
+      const response = await fetch(`${url}/games/${id}/delete`, {
         method: 'DELETE',
         headers: { 'content-type': 'application/json' },
       });
@@ -45,7 +42,7 @@ export const gameService = {
   },
   addPlayerToGame: async function (data) {
     try {
-      const response = await fetch(`${url}/${data._id}/addPlayer`, {
+      const response = await fetch(`${url}/games/${data._id}/addPlayer`, {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(data.player),
@@ -57,7 +54,7 @@ export const gameService = {
   },
   removePlayerFromGame: async function (data) {
     try {
-      const response = await fetch(`${url}/${data._id}/removePlayer`, {
+      const response = await fetch(`${url}/games/${data._id}/removePlayer`, {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(data.player),

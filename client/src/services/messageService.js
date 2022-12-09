@@ -1,12 +1,9 @@
-const url = 'http://192.168.1.185:3000/messages';
-
-// home: 192.168.0.12
-// codeworks: 192.168.1.185
+const url = ''; // http://<yourIP>:<port>
 
 export const messageService = {
   postMessage: async (message) => {
     try {
-      const posted = await fetch(`${url}/new`, {
+      const posted = await fetch(`${url}/messages/new`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(message),
@@ -18,7 +15,7 @@ export const messageService = {
   },
   getMessages: async function () {
     try {
-      const response = await fetch(url);
+      const response = await fetch(`${url}/messages`);
       return await response.json();
     } catch (error) {
       console.log('ERROR: messageService: _GET_: ', error);
@@ -26,7 +23,7 @@ export const messageService = {
   },
   postMessageGroup: async (group) => {
     try {
-      const posted = await fetch(`${url}/group/new`, {
+      const posted = await fetch(`${url}/messages/group/new`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(group),
@@ -38,7 +35,7 @@ export const messageService = {
   },
   getMessageGroups: async function () {
     try {
-      const response = await fetch(`${url}/groups`);
+      const response = await fetch(`${url}/messages/groups`);
       return await response.json();
     } catch (error) {
       console.log('ERROR: messageService: _GET_: ', error);
@@ -46,7 +43,7 @@ export const messageService = {
   },
   addMessageToGroup: async function (data) {
     try {
-      const response = await fetch(`${url}/groups/${data._id}`, {
+      const response = await fetch(`${url}/messages/groups/${data._id}`, {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(data),
