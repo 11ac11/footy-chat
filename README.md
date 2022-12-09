@@ -1,4 +1,7 @@
 # FootyChat
+
+![FootychatPreviews](https://user-images.githubusercontent.com/105861220/206741959-b47c5be2-4636-474f-aaaf-b8d23ecc542c.png)
+
 FootyChat allows users to organise friendly football games within communities. It replaces the need for numerous football chats across various messaging platforms with its own chat functionality, specifically for football. 
 
 Users can create games and then send a message to see if anyone is available to play. The app can also automate team selection based on information submitted during the onboarding stage of sign up.
