@@ -12,18 +12,15 @@ Users can create games and then send a message to see if anyone is available to 
 
 or run it locally following the steps below:
 
+This app was created with React Native and Expo.
+
+To install Expo, please read the following instructions: https://docs.expo.dev/get-started/installation/.
+
 ### Front end
-
-#### Environment variables
-
-- **VITE_API_URL**: URL to the back end API p.e. http://localhost:4000/api
-- **VITE_GOOGLE_MAPS_API_KEY**: Google Maps API Key
-- **VITE_GOOGLE_CLIENT_ID**: Client ID of your Google OAuth application
-- **VITE_GOOGLE_CLIENT_SECRET**: Client secret of your Google OAuth application
 
 #### Running the app
 
-First of all you have to install node dependencies
+First of all navigate to the client folder and install the dependencies.
 
 ```bash
 npm i
@@ -32,36 +29,18 @@ npm i
 Then run the app
 
 ```bash
-npm run dev
+npx expo start
 ```
 
-Your app by default should be running in http://localhost:5173/
+Expo will generate a QR code that you can scan with your mobile device and the Expo app will load a version that you can use like a normal application.
 
 ### Back end
 
 #### Environment variables
 
-- **PORT:** The port the server will run in
-
-- **DATABASE_URL:** The connection URL for the database (only tested in postgres and it has to be a SQL DB). If you're running the postgres container declared in docker-compose this must be "postgres://postgres:postgres@postgres:5432/adopet"
-
-- **TOKEN_KEY:** The key that will be used to encrypt the tokens
-
-- **ENVIRONMENT:** The environment the app is in (production or development)
-
-- **GOOGLE_SECRET:** Client secret of your Google OAuth application
-
-- **GOOGLE_EMAIL**: The email of the owner of your Google OAuth application
-
-##### Testing
-
-- **ADMIN_TOKEN:** The admin token in the database
-
-- **GOOGLE_TOKEN:** Token for an existing google account in the database
-
-- **GOOGLE_TOKEN_NON_EXISTING:** Token for a non existing google account in the database
-
-- **GOOGLE_USER_ID**: Google ID to create an account with
+- **DEV_PORT:** The port you wish to run the server on
+- **DBNAME:** The name of the MongoDB database
+- **URL:** The connection string from MongoDB Atlas, that will look something like <user>:<password>@cluster0.dgjhsa.mongodb.net/<dbname>
 
 #### Running the app
 
@@ -71,13 +50,13 @@ First of all you have to install node dependencies
 npm i
 ```
 
-Then run the app
+Then run the server with nodemon
 
 ```bash
-npm run docker:compose
+nodemon
 ```
 
-Your app by default should be running in [http://localhost:[ENV-PORT]/]
+Your app by default should be running in [http://localhost:[DEV_PORT]/]
 
 # Tech Stack
 - React Native
