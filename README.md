@@ -40,7 +40,7 @@ Expo will generate a QR code that you can scan with your mobile device and the E
 
 - **DEV_PORT:** The port you wish to run the server on
 - **DBNAME:** The name of the MongoDB database
-- **URL:** The connection string from MongoDB Atlas, that will look something like <user>:<password>@cluster0.dgjhsa.mongodb.net/<dbname>
+- **URL:** The connection string from MongoDB Atlas, that will look something like [<user>:<password>@cluster0.dgjhsa.mongodb.net/<dbname>]
 
 #### Running the app
 
@@ -59,7 +59,7 @@ nodemon
 Your app by default should be running in [http://localhost:[DEV_PORT]/]
 
 # Tech Stack
-- React Native
+- React Native with Expo
 - MongoDB
 - Koa
 - Sockets.io
