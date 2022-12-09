@@ -26,7 +26,7 @@ First of all navigate to the client folder and install the dependencies.
 npm i
 ```
 
-Go to the services folder and for the 'const = URL' in each file, put your IP/PORT.
+Go to the services folder and for the 'const = URL' in each file, put your IP/PORT. You must put your full IP, localhost will not work.
 
 Then run the app
 
