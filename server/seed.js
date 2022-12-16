@@ -12,6 +12,7 @@ mongoose
   })
   .catch((err) => {
     console.log(err);
+    [];
   });
 
 // 22 players
