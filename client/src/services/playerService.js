@@ -42,7 +42,7 @@ export const playerService = {
         credentials: 'include',
       });
       const json = await res.json();
-
+      console.log(json);
       AsyncStorage.setItem('accessToken', json.token);
 
       return json;
