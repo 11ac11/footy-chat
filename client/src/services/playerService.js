@@ -1,4 +1,4 @@
-const url = ''; // http://<yourIP>:<port>
+const url = 'http://192.168.0.12:3000'; // http://<yourIP>:<port>
 
 const headers = { 'content-type': 'application/json' };
 import AsyncStorage from '@react-native-async-storage/async-storage';

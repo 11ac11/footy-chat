@@ -28,9 +28,9 @@ export default function App() {
   });
 
   const initialState = auth.isAuthenticated();
-  const [isAuthenticated, setIsAuthenticated] = useState(initialState);
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // FOR TESTING --- useState(initialState)
   const [currentUser, setCurrentUser] = useState({});
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState('demo@footychat.com'); // FOR TESTING
 
   async function fetchProfile() {
     const profile = await playerService.getPlayerByEmail(userEmail);
@@ -40,7 +40,7 @@ export default function App() {
 
   useEffect(() => {
     fetchProfile();
-    console.log('current user email: ', userEmail);
+    console.log('Current user email: ', userEmail);
   }, [userEmail]);
 
   const Stack = createStackNavigator();

@@ -5,6 +5,7 @@ import {
   FlatList,
   ImageBackground,
   Pressable,
+  Modal,
 } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
 import Moment from 'moment';
@@ -15,6 +16,7 @@ import { TrashIcon } from '../../components/Icons';
 import { gameService } from '../../services/gameService';
 import FullWidthButton from '../../components/FullWidthButton';
 import PrimaryButton from '../../components/PrimaryButton';
+import DeleteGameModal from './DeleteGameModal';
 import { Loading } from '../../components/Loading';
 
 const image = {
@@ -33,6 +35,7 @@ export default function MatchDetails({ navigation, route, setGames }) {
   const player = useContext(UserContext);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showDelWindow, setShowDelWindow] = useState(false);
   const [isPlayerInGame, setIsPlayerInGame] = useState(false);
 
   async function fetchPlayers() {
@@ -87,7 +90,7 @@ export default function MatchDetails({ navigation, route, setGames }) {
       .catch((error) => console.log(error));
   }
 
-  function deleteGame() {
+  function confirmDeleteGame() {
     gameService
       .deleteThisGame(_id)
       .then((res) =>
@@ -96,6 +99,7 @@ export default function MatchDetails({ navigation, route, setGames }) {
         })
       )
       .catch((error) => console.log(error));
+    setShowDelWindow(false);
     navigation.goBack();
   }
 
@@ -123,7 +127,7 @@ export default function MatchDetails({ navigation, route, setGames }) {
 
           {player._id === admin ? (
             <Pressable
-              onPress={deleteGame}
+              onPress={() => setShowDelWindow(true)}
               style={({ pressed }) => styles.deletebtn}
             >
               <TrashIcon />
@@ -132,6 +136,20 @@ export default function MatchDetails({ navigation, route, setGames }) {
             <></>
           )}
         </View>
+        {showDelWindow ? (
+          <DeleteGameModal
+            showDelWindow={showDelWindow}
+            setShowDelWindow={setShowDelWindow}
+            _id={_id}
+            location
+            description
+            date
+            navigation
+            confirmDeleteGame={confirmDeleteGame}
+          />
+        ) : (
+          <></>
+        )}
         <View style={styles.matchDetailsBox}>
           <Text style={styles.matchDetailsText}>
             Max players: {teams === 2 ? max_players * 2 : max_players}
