@@ -141,10 +141,10 @@ export default function MatchDetails({ navigation, route, setGames }) {
             showDelWindow={showDelWindow}
             setShowDelWindow={setShowDelWindow}
             _id={_id}
-            location
-            description
-            date
-            navigation
+            location={location}
+            description={description}
+            date={date}
+            navigation={navigation}
             confirmDeleteGame={confirmDeleteGame}
           />
         ) : (

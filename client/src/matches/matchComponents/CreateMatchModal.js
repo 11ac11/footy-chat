@@ -21,12 +21,10 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState();
-
   const [modalVisible, setModalVisible] = useState(false);
   const [location, setLocation] = useState('');
   const [maxPlayers, setMaxPlayers] = useState('');
   const [selectedNumberTeams, setNumberTeams] = useState('');
-
   const numberOfTeams = [{ value: 1 }, { value: 2 }];
 
   const profile = useContext(UserContext);
@@ -80,6 +78,14 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
   const showTimepicker = () => {
     showMode('time');
   };
+
+  const roundToNextHour = (date) => {
+    date.setMinutes(date.getMinutes() + 60);
+    date.setMinutes(0, 0, 0);
+
+    return date;
+  };
+  roundToNextHour(date);
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
