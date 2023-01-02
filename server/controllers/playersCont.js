@@ -83,7 +83,7 @@ const login = async (ctx) => {
           "Sorry, this email isn't registered. Create an account instead.",
         isLoggedIn: false,
       });
-      return;
+      return ctx.body;
     }
     if (await bcrypt.compare(password, existingUser.password)) {
       const expiry = new Date();
