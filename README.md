@@ -8,10 +8,6 @@ Users can create games and then send a message to see if anyone is available to 
 
 ## Getting started
 
-### You can view a live demo of this project at [adopet.live](https://adopet.live)
-
-or run it locally following the steps below:
-
 This app was created with React Native and Expo.
 
 To install Expo, please read the following instructions: https://docs.expo.dev/get-started/installation/.
@@ -25,6 +21,8 @@ First of all navigate to the client folder and install the dependencies.
 ```bash
 npm i
 ```
+
+Go to the services folder and for the 'const = URL' in each file, put your IP/PORT. You must put your full IP, localhost will not work.
 
 Then run the app
 
