@@ -1,4 +1,5 @@
-const url = 'http://192.168.0.12:3000'; // http://<yourIP>:<port>
+import connection_url from '../../connectionString';
+const url = connection_url;
 
 export const gameService = {
   postGame: async (game) => {

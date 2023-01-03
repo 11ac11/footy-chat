@@ -1,9 +1,8 @@
 import { io } from 'socket.io-client';
+import connection_url from './../connectionString';
+const url = connection_url;
 
-// home: 192.168.0.12
-// codeworks: 192.168.1.185
-
-const socket = io('http://192.168.0.12:3000/');
+const socket = io(url);
 socket.on('connect', () => console.log('sockets connected'));
 
 export default socket;
