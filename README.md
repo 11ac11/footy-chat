@@ -22,7 +22,12 @@ First of all navigate to the client folder and install the dependencies.
 npm i
 ```
 
-Go to the services folder and for the 'const = URL' in each file, put your IP/PORT. You must put your full IP, localhost will not work.
+Create a file in the root of the client folder called: connectionString.js
+
+Then copy the following line into it, amending the string to your correct IP/PORT - localhost will NOT work!
+```js script
+export default connection_url = 'http://<YOUR LOCAL IP HERE>:<PORT HERE>';
+```
 
 Then run the app
 
