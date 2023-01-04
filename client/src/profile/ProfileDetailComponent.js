@@ -1,31 +1,54 @@
-import { useContext } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-
+import { TextInput } from 'react-native-gesture-handler';
 import { theme } from '../theme';
+import { DropDown } from '../components/DropDown';
 
-export const ProfileDetailComponent = ({ label, value }) => {
+export const ProfileDetailComponent = ({
+  label,
+  value,
+  selectList = false,
+}) => {
+  let editMode = false;
   return (
     <View style={styles.oneLine}>
       <View style={styles.labelsBox}>
         <Text style={styles.label}>{label}</Text>
       </View>
-      <Text style={styles.value}>{value}</Text>
+      {!editMode ? (
+        <Text style={styles.value}>{value}</Text>
+      ) : selectList ? (
+        <DropDown
+          setSelected={() => {}}
+          data={['test1', 'test2']}
+          onSelect={() => {}}
+          width={150}
+        />
+      ) : (
+        <TextInput
+          style={[styles.value, styles.edit]}
+          value={value}
+          label={label}
+          onChangeText={() => {}}
+          placeholder={value}
+          placeholderTextColor={theme.onyx}
+          keyboardType="email-address"
+        />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   oneLine: {
-    width: '90%',
+    maxWidth: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
   },
   labelsBox: {
-    width: '55%',
+    width: '50%',
   },
   label: {
-    marginHorizontal: 20,
     fontFamily: 'GemunuLibreBold',
     fontSize: 16,
     textAlign: 'left',
@@ -33,11 +56,15 @@ const styles = StyleSheet.create({
     color: theme.gainsboro,
   },
   value: {
-    marginHorizontal: 20,
     fontFamily: 'GemunuLibreLight',
     fontSize: 18,
     textAlign: 'left',
     letterSpacing: 2,
     color: theme.gainsboro,
+  },
+  edit: {
+    backgroundColor: 'white',
+    color: 'black',
+    paddingLeft: 2,
   },
 });
