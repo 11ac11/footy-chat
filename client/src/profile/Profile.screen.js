@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../theme';
 import FullWidthButton from '../components/FullWidthButton';
 import { Loading } from '../components/Loading';
+import { ProfileDetailComponent } from './ProfileDetailComponent';
 
 export const Profile = ({ setIsAuthenticated }) => {
   const profile = useContext(UserContext);
@@ -25,48 +26,16 @@ export const Profile = ({ setIsAuthenticated }) => {
         style={styles.pic}
       />
       <View style={styles.infoContainer}>
-        <View style={styles.oneLine}>
-          <View style={styles.labelsBox}>
-            <Text style={styles.label}>Email:</Text>
-          </View>
-          <Text style={styles.value}>{profile.email}</Text>
-        </View>
-        <View style={styles.oneLine}>
-          <View style={styles.labelsBox}>
-            <Text style={styles.label}>Name:</Text>
-          </View>
-          <Text style={styles.value}>{profile.name}</Text>
-        </View>
-        <View style={styles.oneLine}>
-          <View style={styles.labelsBox}>
-            <Text style={styles.label}>Position:</Text>
-          </View>
-          <Text style={styles.value}>{profile.position}</Text>
-        </View>
-        <View style={styles.oneLine}>
-          <View style={styles.labelsBox}>
-            <Text style={styles.label}>Preferred Foot:</Text>
-          </View>
-          <Text style={styles.value}>{profile.foot}</Text>
-        </View>
-        <View style={styles.oneLine}>
-          <View style={styles.labelsBox}>
-            <Text style={styles.label}>Preferred Side:</Text>
-          </View>
-          <Text style={styles.value}>{profile.side}</Text>
-        </View>
-        <View style={styles.oneLine}>
-          <View style={styles.labelsBox}>
-            <Text style={styles.label}>Nationality:</Text>
-          </View>
-          <Text style={styles.value}>{profile.nationality}</Text>
-        </View>
-        <View style={styles.oneLine}>
-          <View style={styles.labelsBox}>
-            <Text style={styles.label}>Team:</Text>
-          </View>
-          <Text style={styles.value}>{profile.team}</Text>
-        </View>
+        <ProfileDetailComponent label={'Email:'} value={profile.email} />
+        <ProfileDetailComponent label={'Name:'} value={profile.name} />
+        <ProfileDetailComponent label={'Position:'} value={profile.position} />
+        <ProfileDetailComponent label={'Foot:'} value={profile.foot} />
+        <ProfileDetailComponent label={'Side:'} value={profile.side} />
+        <ProfileDetailComponent
+          label={'Nationality:'}
+          value={profile.nationality}
+        />
+        <ProfileDetailComponent label={'Team:'} value={profile.team} />
       </View>
     </View>
   ) : (
@@ -95,30 +64,5 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     marginTop: 10,
-  },
-  oneLine: {
-    width: '90%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-  },
-  labelsBox: {
-    width: '55%',
-  },
-  label: {
-    marginHorizontal: 20,
-    fontFamily: 'GemunuLibreBold',
-    fontSize: 16,
-    textAlign: 'left',
-    letterSpacing: 2,
-    color: theme.gainsboro,
-  },
-  value: {
-    marginHorizontal: 20,
-    fontFamily: 'GemunuLibreLight',
-    fontSize: 18,
-    textAlign: 'left',
-    letterSpacing: 2,
-    color: theme.gainsboro,
   },
 });
