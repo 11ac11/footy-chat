@@ -6,9 +6,9 @@ import { playerService } from '../services/playerService';
 import { UserContext } from '../../App';
 import { Ionicons } from '@expo/vector-icons';
 
-import { theme } from '../theme';
-import FullWidthButton from '../components/FullWidthButton';
-import { Loading } from '../components/Loading';
+import { theme } from '../ui/theme';
+import FullWidthButton from '../ui/FullWidthButton';
+import { Loading } from '../ui/Loading';
 import { ProfileDetailComponent } from './ProfileDetailComponent';
 
 export const Profile = ({ setIsAuthenticated }) => {

@@ -3,15 +3,11 @@ import { StyleSheet } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MatchStack } from '../matches/MatchStack.navigator';
-import {
-  HomeIcon,
-  ProfileIcon,
-  TeamIcon,
-  MessageIcon,
-} from '../components/Icons';
-import { ProfileStack } from './../profile/ProfileStack.navigator';
-import { theme } from '../theme';
+import { HomeIcon, ProfileIcon, CommunityIcon, MessageIcon } from '../ui/Icons';
+import { ProfileStack } from '../profile/ProfileStack.navigator';
+import { theme } from '../ui/theme';
 import { MessageStack } from '../messages/MessageStack.navigator';
+import { CommunityStack } from '../community/CommunityStack.navigator';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -30,10 +26,9 @@ export const BottomTabsNavigator = ({ setIsAuthenticated }) => {
             return <HomeIcon color={color} size={size} />;
           } else if (route.name === 'ProfileStack') {
             return <ProfileIcon color={color} size={size} />;
-          }
-          // else if (route.name === 'Teams') {
-          //   return <TeamIcon color={color} size={size} />;
-          else if (route.name === 'MessageStack') {
+          } else if (route.name === 'CommunityStack') {
+            return <CommunityIcon color={color} size={size} />;
+          } else if (route.name === 'MessageStack') {
             return <MessageIcon color={color} size={size} />;
           }
           return null;
@@ -48,6 +43,11 @@ export const BottomTabsNavigator = ({ setIsAuthenticated }) => {
       <BottomTabs.Screen name="ProfileStack" style={styles.container}>
         {(props) => (
           <ProfileStack {...props} setIsAuthenticated={setIsAuthenticated} />
+        )}
+      </BottomTabs.Screen>
+      <BottomTabs.Screen name="CommunityStack" style={styles.container}>
+        {(props) => (
+          <CommunityStack {...props} setIsAuthenticated={setIsAuthenticated} />
         )}
       </BottomTabs.Screen>
       <BottomTabs.Screen name="MessageStack" style={styles.container}>

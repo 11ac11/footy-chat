@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import auth from '../../utils/auth';
-import { playerService } from './../services/playerService';
+import { playerService } from '../services/playerService';
 import { TextInput } from 'react-native-gesture-handler';
 import { StyleSheet, View, Text, ImageBackground } from 'react-native';
-import { theme } from '../theme';
-import PrimaryButton from '../components/PrimaryButton';
+import { theme } from '../ui/theme';
+import PrimaryButton from '../ui/PrimaryButton';
 
 const Login = ({ setIsAuthenticated, navigation, setUserEmail }) => {
   const [email, setEmail] = useState('');

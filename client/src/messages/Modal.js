@@ -1,8 +1,8 @@
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import PrimaryButton from '../components/PrimaryButton';
+import PrimaryButton from '../ui/PrimaryButton';
 import socket from '../../utils/socket';
-import { theme } from '../theme';
+import { theme } from '../ui/theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const Modal = ({ setVisible, setRooms }) => {

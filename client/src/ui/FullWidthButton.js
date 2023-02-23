@@ -1,40 +1,38 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
-import { theme } from '../theme';
+import { theme } from './theme';
 
-export default function PrimaryButton({
+export default function FullWidthButton({
   navigation,
   children,
   setGames,
   text,
   onPress,
-  mainColor,
-  pressedColor,
 }) {
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) =>
-        text == 'Create Account'
+        text == 'Leave'
           ? [
               {
-                backgroundColor: pressed
-                  ? pressedColor || theme.gainsboro
-                  : mainColor || theme.white,
+                backgroundColor: pressed ? theme.gainsboro : theme.red,
               },
               styles.button,
-              { marginTop: 200 },
             ]
           : [
               {
-                backgroundColor: pressed
-                  ? pressedColor || theme.gainsboro
-                  : mainColor || theme.emerald,
+                backgroundColor: pressed ? theme.gainsboro : theme.emerald,
               },
               styles.button,
             ]
       }
+      setGames={setGames}
     >
-      <Text style={styles.text}>{text}</Text>
+      <Text
+        style={text == 'Leave' ? [styles.text, styles.blackish] : styles.text}
+      >
+        {text}
+      </Text>
     </Pressable>
   );
 }
@@ -42,15 +40,16 @@ export default function PrimaryButton({
 const styles = StyleSheet.create({
   button: {
     height: 50,
-    width: 300,
-    marginVertical: 20,
+    width: '100%',
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 20,
   },
   text: {
     fontFamily: 'GemunuLibreMedium',
     fontSize: 20,
+  },
+  onyx: {
+    color: theme.blackish,
   },
 });

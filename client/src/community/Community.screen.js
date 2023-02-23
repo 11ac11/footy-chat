@@ -1,10 +1,11 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 
-export const Teams = () => {
+export const Community = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text>Teams</Text>
+      <Text>Community</Text>
+      <Text>This is community</Text>
     </ScrollView>
   );
 };

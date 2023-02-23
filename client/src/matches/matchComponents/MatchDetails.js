@@ -10,14 +10,14 @@ import {
 import React, { useContext, useState, useEffect } from 'react';
 import Moment from 'moment';
 import { UserContext } from '../../../App';
-import { theme } from '../../theme';
+import { theme } from '../../ui/theme';
 
-import { TrashIcon } from '../../components/Icons';
+import { TrashIcon } from '../../ui/Icons';
 import { gameService } from '../../services/gameService';
-import FullWidthButton from '../../components/FullWidthButton';
-import PrimaryButton from '../../components/PrimaryButton';
+import FullWidthButton from '../../ui/FullWidthButton';
+import PrimaryButton from '../../ui/PrimaryButton';
 import DeleteGameModal from './DeleteGameModal';
-import { Loading } from '../../components/Loading';
+import { Loading } from '../../ui/Loading';
 
 const image = {
   uri: 'https://i.postimg.cc/DZv8w2Sr/Pitch.png',

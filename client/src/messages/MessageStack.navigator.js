@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { UserContext } from '../../App';
-import { theme } from '../theme';
+import { theme } from '../ui/theme';
 import { Chat } from './Chat';
 import io from 'socket.io-client';
 import { Messaging } from './Messaging';

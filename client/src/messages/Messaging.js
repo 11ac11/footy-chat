@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import MessageComponent from './MessageComponent';
-import { theme } from '../theme';
+import { theme } from '../ui/theme';
 import socket from '../../utils/socket';
 import { UserContext } from '../../App';
 

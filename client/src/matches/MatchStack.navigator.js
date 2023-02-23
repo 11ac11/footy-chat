@@ -6,7 +6,7 @@ import { Home } from './Home.screen';
 import { CreateMatchModal } from './matchComponents/CreateMatchModal';
 import MatchDetails from './matchComponents/MatchDetails';
 import { MatchSetTeams } from './matchComponents/MatchSetTeams';
-import { theme } from '../theme';
+import { theme } from '../ui/theme';
 
 const Stack = createStackNavigator();
 

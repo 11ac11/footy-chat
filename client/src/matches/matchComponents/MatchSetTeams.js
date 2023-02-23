@@ -1,9 +1,9 @@
 import { Text, SafeAreaView, StyleSheet, View, FlatList } from 'react-native';
 import React, { useState } from 'react';
-import { theme } from '../../theme';
+import { theme } from '../../ui/theme';
 
 import * as Clipboard from 'expo-clipboard';
-import FullWidthButton from '../../components/FullWidthButton';
+import FullWidthButton from '../../ui/FullWidthButton';
 
 const PlayerT1 = (props) => (
   <View style={styles.playerInList}>

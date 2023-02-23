@@ -2,7 +2,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { theme } from '../theme';
+import { theme } from '../ui/theme';
 import Moment from 'moment';
 
 export const ChatComponent = ({ item }) => {

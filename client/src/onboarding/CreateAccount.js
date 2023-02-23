@@ -6,7 +6,7 @@ import SelectList from 'react-native-dropdown-select-list';
 import auth from '../../utils/auth';
 
 import { playerService } from '../services/playerService';
-import { theme } from '../theme';
+import { theme } from '../ui/theme';
 
 export const CreateAccount = ({
   navigation,

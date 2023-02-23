@@ -1,6 +1,6 @@
 import React from 'react';
 import { Svg, Path, Circle } from 'react-native-svg';
-import { theme } from '../theme';
+import { theme } from './theme';
 
 export const HomeIcon = ({ color = 'white', size = 40 }) => {
   return (
@@ -75,7 +75,7 @@ export const ProfileIcon = ({ color = 'white', size = 40 }) => {
   );
 };
 
-export const TeamIcon = ({ color = 'white', size = 40 }) => {
+export const CommunityIcon = ({ color = 'white', size = 40 }) => {
   return (
     <Svg
       width="40"

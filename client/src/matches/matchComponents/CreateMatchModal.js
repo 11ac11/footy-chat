@@ -13,8 +13,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import { UserContext } from '../../../App';
 import { gameService } from '../../services/gameService';
-import { theme } from '../../theme';
-import PrimaryButton from '../../components/PrimaryButton';
+import { theme } from '../../ui/theme';
+import PrimaryButton from '../../ui/PrimaryButton';
 
 export const CreateMatchModal = ({ navigation, setGames }) => {
   const [description, setDescription] = useState('');

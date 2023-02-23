@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
-import { theme } from '../theme';
+import { theme } from './theme';
 
 export const DropDown = ({ setSelected, data, onSelect, width }) => {
   return (

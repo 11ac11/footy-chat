@@ -7,13 +7,13 @@ import auth from './utils/auth';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { BottomTabsNavigator } from './src/screens/BottomTabs.navigator';
+import { BottomTabsNavigator } from './src/navigation/BottomTabs.navigator';
 
 import { useFonts } from 'expo-font';
 import 'react-native-gesture-handler';
-import { theme } from './src/theme';
-import Login from './src/screens/Login';
-import { CreateAccount } from './src/components/CreateAccount';
+import { theme } from './src/ui/theme';
+import Login from './src/navigation/Login';
+import { CreateAccount } from './src/onboarding/CreateAccount';
 //import { UserContextProvider } from './userContext';
 import { playerService } from './src/services/playerService';
 

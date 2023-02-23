@@ -4,12 +4,12 @@ import { View, Text, SafeAreaView, FlatList, StyleSheet } from 'react-native';
 import socket from '../../utils/socket';
 
 import { ChatComponent } from './ChatComponent';
-import { theme } from '../theme';
-import FullWidthButton from '../components/FullWidthButton';
+import { theme } from '../ui/theme';
+import FullWidthButton from '../ui/FullWidthButton';
 import { messageService } from '../services/messageService';
 
 import { Modal } from './Modal';
-import { Loading } from '../components/Loading';
+import { Loading } from '../ui/Loading';
 
 export const Chat = () => {
   const [visible, setVisible] = useState(false);

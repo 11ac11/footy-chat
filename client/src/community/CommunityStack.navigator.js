@@ -1,17 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Profile } from './Profile.screen';
-import { UserContext } from '../../App';
 import { theme } from '../ui/theme';
+import { Community } from './Community.screen';
 
 const Stack = createStackNavigator();
 
-export const ProfileStack = ({ navigation, setIsAuthenticated }) => {
-  const profile = useContext(UserContext);
+export const CommunityStack = ({ navigation }) => {
+  // const [games, setGames] = useState([]);
+  // const [loading, setLoading] = useState(false);
+
+  // async function fetchGames() {
+  //   try {
+  //     setLoading(true);
+  //     const games = await gameService.getGames();
+  //     setGames(games.sort((a, b) => new Date(a.date) - new Date(b.date)));
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchGames();
+  // }, []);
+
   return (
     <Stack.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Community"
       screenOptions={{
         headerTitleStyle: { color: 'black' },
         headerTitleAlign: 'center',
@@ -29,10 +46,8 @@ export const ProfileStack = ({ navigation, setIsAuthenticated }) => {
         },
       }}
     >
-      <Stack.Screen name="Profile" options={{ title: `Your profile` }}>
-        {(props) => (
-          <Profile {...props} setIsAuthenticated={setIsAuthenticated} />
-        )}
+      <Stack.Screen name="Community">
+        {(props) => <Community {...props} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, Modal, View, StyleSheet, Pressable } from 'react-native';
 import Moment from 'moment';
-import PrimaryButton from '../../components/PrimaryButton';
-import { theme } from '../../theme';
+import PrimaryButton from '../../ui/PrimaryButton';
+import { theme } from '../../ui/theme';
 
 export default function deleteGameModal({
   setShowDelWindow,

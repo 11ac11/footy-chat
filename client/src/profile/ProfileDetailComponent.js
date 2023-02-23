@@ -1,7 +1,7 @@
 import { Text, StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { theme } from '../theme';
-import { DropDown } from '../components/DropDown';
+import { theme } from '../ui/theme';
+import { DropDown } from '../ui/DropDown';
 
 export const ProfileDetailComponent = ({
   label,

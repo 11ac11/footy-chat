@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
-import { theme } from '../theme';
+import { theme } from '../ui/theme';
 import { UserContext } from '../../App';
 import Moment from 'moment';
 
