@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { MatchList } from './matchComponents/MatchList';
+import { List } from '../components/List';
 import { theme } from '../ui/theme';
 import FullWidthButton from '../ui/FullWidthButton';
 
@@ -15,6 +16,7 @@ export const Home = ({ navigation, games, setGames }) => {
           //navigation={navigation}
         />
         <MatchList navigation={navigation} games={games} />
+        <List listData={games} leftBoxDate={false} />
       </View>
     </>
   );

@@ -28,20 +28,39 @@ export default function App() {
   });
 
   const initialState = auth.isAuthenticated();
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // FOR TESTING --- useState(initialState)
+  const [isAuthenticated, setIsAuthenticated] = useState(initialState); // FOR TESTING --- useState(initialState)
   const [currentUser, setCurrentUser] = useState({});
-  const [userEmail, setUserEmail] = useState('demo@footychat.com'); // FOR TESTING
+  const [userEmail, setUserEmail] = useState('');
 
   async function fetchProfile() {
-    const profile = await playerService.getPlayerByEmail(userEmail);
+    const profile = await playerService.getPlayerByEmail('demo@footychat.com'); // change email to userEmail when not testing
+    console.log('FE', profile);
     setCurrentUser(profile);
     console.log('current user: ', profile.name);
   }
 
+  // whole function for testing for testing
+  async function autoLogin() {
+    const email = 'demo@footychat.com';
+    const password = '1';
+    const res = await playerService.login({ email, password });
+    if (!res.isLoggedIn) {
+      alert(res.status);
+    } else {
+      setIsAuthenticated(true);
+      setUserEmail(email);
+      auth.login(() => {});
+    }
+  }
+
   useEffect(() => {
+    // below for auto login while testing
+    autoLogin();
+    setUserEmail('demo@footychat.com');
+    // delete above when not testing
     fetchProfile();
     console.log('Current user email: ', userEmail);
-  }, [userEmail]);
+  }, []);
 
   const Stack = createStackNavigator();
 
