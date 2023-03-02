@@ -2,75 +2,60 @@
 import Moment from 'moment';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 // import { UserContext } from '../../../userContext'; --- TO USE CONTEXT
-import { UserContext } from '../../../App';
+import { UserContext } from '../../App';
 import { useContext } from 'react';
-import { theme } from '../../ui/theme';
+import { theme } from '../ui/theme';
 
-export default function MatchItem({
-  _id,
-  location,
-  description,
-  date,
-  navigation,
-  admin,
-  admin_name,
-  max_players,
-  players,
-  teams,
-  games,
-  setGames,
-}) {
+export const Item = ({
+  leftBoxDate,
+  hasTime,
+  hasSmallImg,
+  topText,
+  bottomText,
+}) => {
   const user = useContext(UserContext);
+
+  const date = new Date();
+
+  console.log('lItem', leftBoxDate);
+
+  const handleNavigate = () => {
+    console.log('would navigate');
+  };
 
   return (
     <>
-      <Pressable
-        style={styles.gameItemBox}
-        onPress={() =>
-          navigation.navigate('Match Details', {
-            _id: _id,
-            location: location,
-            date: date,
-            admin: admin,
-            description: description,
-            date: date,
-            max_players: max_players,
-            players: players,
-            teams,
-            games,
-            setGames,
-          })
-        }
-      >
-        <View style={styles.gameDateBox}>
-          <Text style={styles.gameDate}>{Moment(date).format('ddd')}</Text>
-          <Text style={styles.gameDate}>{Moment(date).format('D')}</Text>
-          <Text style={styles.gameDate}>{Moment(date).format('MMM')}</Text>
+      <Pressable style={styles.gameItemBox} onPress={handleNavigate()}>
+        <View style={styles.leftBox}>
+          {leftBoxDate ? (
+            <View style={styles.gameDateBox}>
+              <Text style={styles.gameDate}>{Moment(date).format('ddd')}</Text>
+              <Text style={styles.gameDate}>{Moment(date).format('D')}</Text>
+              <Text style={styles.gameDate}>{Moment(date).format('MMM')}</Text>
+            </View>
+          ) : (
+            <Image />
+          )}
         </View>
         <View style={styles.infoBox}>
-          <View style={styles.gameDetailsBox}>
-            <Text style={styles.gameDate}>{Moment(date).format('HH:mm')}</Text>
-            <Text style={styles.gameLocationText}>@ {location} </Text>
-          </View>
-          <View style={styles.gameDetailsBox}>
-            <Text style={styles.gameNameText}>{description}</Text>
-          </View>
-          <View style={styles.gameDetailsBox}>
-            {admin === user._id ? (
-              <Text style={[styles.gameNameText, styles.organiser]}>
-                ⭐ You are organising
-              </Text>
-            ) : (
-              <Text style={[styles.gameNameText, styles.organiser]}>
-                Organiser : {admin_name}
+          <View style={styles.detailsBox}>
+            <Text style={styles.topText}>{topText}</Text>
+            {hasTime && (
+              <Text style={styles.gameDate}>
+                {Moment(date).format('HH:mm')}
               </Text>
             )}
           </View>
+          <View style={styles.detailsBox}>
+            <Text style={styles.bottomText}>{bottomText}</Text>
+          </View>
+          <View style={styles.detailsBox}></View>
+          {hasSmallImg && <Text>Img</Text>}
         </View>
       </Pressable>
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   gameItemBox: {
@@ -104,16 +89,21 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 0,
   },
-  gameDetailsBox: {
+  detailsBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  gameNameText: {
+  topText: {
     padding: 0,
     color: theme.gainsboro,
     fontFamily: 'GemunuLibreBold',
     letterSpacing: 1,
     fontSize: 20,
+  },
+  bottomText: {
+    color: theme.darkGrey,
+    fontSize: 14,
+    paddingVertical: 5,
   },
   gameLocationText: {
     padding: 0,
@@ -121,10 +111,5 @@ const styles = StyleSheet.create({
     fontFamily: 'GemunuLibreMedium',
     letterSpacing: 1,
     fontSize: 14,
-  },
-  organiser: {
-    color: theme.darkGrey,
-    fontSize: 14,
-    paddingVertical: 5,
   },
 });

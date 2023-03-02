@@ -1,33 +1,26 @@
-import MatchItem from './MatchItem';
+import { Item } from './ListItem';
 import { View, StyleSheet, FlatList } from 'react-native';
 
-export const MatchList = ({ navigation, games, setGames }) => {
+export const List = ({ listData, listItemProps, leftBoxDate }) => {
+  console.log('this is listdata', ...listData);
+  console.log(leftBoxDate);
+
+  const itemProps = {
+    leftBoxDate: true,
+    hasSmallImg: true,
+    hasTime: true,
+    topText: 'this is top text',
+    bottomText: 'this is bottom text',
+  };
+
   return (
-    <>
-      <View style={styles.container}>
-        <FlatList
-          style={styles.chatList}
-          data={games}
-          renderItem={({ item }) => (
-            <MatchItem
-              navigation={navigation}
-              key={item._id}
-              _id={item._id}
-              description={item.description}
-              location={item.location}
-              date={item.date}
-              admin={item.admin}
-              admin_name={item.admin_name}
-              max_players={item.max_players}
-              teams={item.teams}
-              players={item.players}
-              setGames={setGames}
-            />
-          )}
-          keyExtractor={(item) => item._id}
-        />
-      </View>
-    </>
+    <View style={styles.container}>
+      <FlatList
+        data={listData}
+        renderItem={(item) => <Item {...itemProps} leftBoxDate />}
+        keyExtractor={(item) => item._id}
+      />
+    </View>
   );
 };
 
@@ -35,6 +28,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     width: '100%',
+    maxWidth: '100%',
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 10,
