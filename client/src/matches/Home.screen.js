@@ -1,45 +1,50 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { MatchList } from './matchComponents/MatchList';
-import { List } from '../components/List';
+import { FCList } from '../components/FCList';
+import { FCListItem } from '../components/FCListItem';
 import { theme } from '../ui/theme';
 import FullWidthButton from '../ui/FullWidthButton';
-import { Item } from './../components/ListItem';
 
 export const Home = ({ navigation, games, setGames }) => {
   const generalListItemProps = {
+    navigation: navigation,
     leftBoxDate: true,
     hasSmallImg: true,
     timeOnRight: true,
-    hasTime: true,
   };
 
   return (
-    <>
-      <View style={styles.container}>
-        <FullWidthButton
-          text={'Add Match'}
-          onPress={() => navigation.navigate('Create Match')}
-          setGames={setGames}
-          //navigation={navigation}
-        />
-        <MatchList navigation={navigation} games={games} />
-        <List
-          data={games}
-          renderItem={({ item }) => (
-            <Item
-              {...generalListItemProps}
-              topText={item.description}
-              bottomText={item.location}
-              thirdText={'FC Real Love Inn'}
-              date={item.date}
-              time={item.date}
-            />
-          )}
-          keyExtractor={(item) => item._id}
-        />
-      </View>
-    </>
+    <View style={styles.container}>
+      <FullWidthButton
+        text={'Add Match'}
+        onPress={() => navigation.navigate('Create Match')}
+        setGames={setGames}
+      />
+      <MatchList navigation={navigation} games={games} />
+      <FCList
+        data={games}
+        renderItem={({ item }) => (
+          <FCListItem
+            {...generalListItemProps}
+            topText={item.description}
+            bottomText={item.location}
+            thirdText={'FC Real Love Inn'}
+            date={item.date}
+            time={item.date}
+            key={item._id}
+            _id={item._id}
+            admin={item.admin}
+            admin_name={item.admin_name}
+            max_players={item.max_players}
+            teams={item.teams}
+            players={item.players}
+            setGames={setGames}
+          />
+        )}
+        keyExtractor={(item) => item._id}
+      />
+    </View>
   );
 };
 

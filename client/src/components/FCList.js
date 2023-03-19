@@ -1,7 +1,6 @@
-import { Item } from './ListItem';
 import { View, StyleSheet, FlatList } from 'react-native';
 
-export const List = ({ data, renderItem }) => {
+export const FCList = ({ data, renderItem }) => {
   return (
     <View style={styles.container}>
       <FlatList data={data} renderItem={renderItem} />

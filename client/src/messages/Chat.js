@@ -3,6 +3,9 @@ import { View, Text, SafeAreaView, FlatList, StyleSheet } from 'react-native';
 
 import socket from '../../utils/socket';
 
+import { FCList } from '../components/FCList';
+import { FCListItem } from '../components/FCListItem';
+
 import { ChatComponent } from './ChatComponent';
 import { theme } from '../ui/theme';
 import FullWidthButton from '../ui/FullWidthButton';
@@ -10,6 +13,7 @@ import { messageService } from '../services/messageService';
 
 import { Modal } from './Modal';
 import { Loading } from '../ui/Loading';
+import { useNavigation } from '@react-navigation/native';
 
 export const Chat = () => {
   const [visible, setVisible] = useState(false);
@@ -40,25 +44,44 @@ export const Chat = () => {
     });
   }, [socket]);
 
+  const navigation = useNavigation();
+
+  const chatListItemProps = {
+    navigation: navigation,
+    leftBoxDate: false,
+    hasSmallImg: false,
+    timeOnRight: true,
+  };
+
+  console.log(rooms);
+
   return (
     <>
       {visible ? <Modal setVisible={setVisible} setRooms={setRooms} /> : ''}
       <SafeAreaView style={styles.container}>
         <FullWidthButton text={'New Chat'} onPress={() => setVisible(true)} />
-        <View>
-          {rooms.length > 0 ? (
-            <FlatList
-              style={styles.chatList}
-              data={rooms}
-              renderItem={({ item }) => <ChatComponent item={item} />}
-              keyExtractor={(item) => item._id}
-            />
-          ) : (
-            <View style={[styles.chatListEmpty, { paddingTop: 50 }]}>
-              <Loading />
-            </View>
-          )}
-        </View>
+        {rooms.length > 0 ? (
+          <FCList
+            data={rooms}
+            renderItem={({ item }) => (
+              <FCListItem
+                {...chatListItemProps}
+                topText={item.name}
+                bottomText={`${item.messages[item.messages.length - 1].user}: ${
+                  item.messages[item.messages.length - 1].text
+                }`}
+                time={item.messages[item.messages.length - 1].time}
+                key={item.messages._id}
+                _id={item.messages._id}
+              />
+            )}
+            keyExtractor={(item) => item._id}
+          />
+        ) : (
+          <View style={[styles.chatListEmpty, { paddingTop: 50 }]}>
+            <Loading />
+          </View>
+        )}
       </SafeAreaView>
     </>
   );
@@ -68,9 +91,10 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 0,
     backgroundColor: theme.blackish,
+    justifyContent: 'center',
   },
   chatList: {
-    height: '90%',
+    height: '50%',
   },
   chatListEmpty: {
     width: '100%',

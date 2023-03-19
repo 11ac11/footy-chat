@@ -1,4 +1,3 @@
-//import Moment from 'react-moment';
 import Moment from 'moment';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 // import { UserContext } from '../../../userContext'; --- TO USE CONTEXT
@@ -7,10 +6,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useContext } from 'react';
 import { theme } from '../ui/theme';
 
-export const Item = ({
+export const FCListItem = ({
+  navigation,
   leftBoxDate,
-  timeOnRight,
   hasSmallImg,
+  timeOnRight,
   topText,
   bottomText,
   thirdText,
@@ -26,30 +26,35 @@ export const Item = ({
   return (
     <>
       <Pressable style={styles.gameItemBox} onPress={handleNavigate}>
-        <View style={styles.leftBox}>
+        <View style={[styles.leftBox, leftBoxDate && styles.leftBoxDate]}>
           {leftBoxDate ? (
             <>
               <Text style={styles.gameDateDay}>
-                {Moment(date).format('ddd D')}
+                {Moment(date).format('ddd')}
               </Text>
+              <Text style={styles.gameDateDay}>{Moment(date).format('D')}</Text>
               <Text style={styles.gameDate}>{Moment(date).format('MMM')}</Text>
             </>
           ) : (
             <Ionicons
               name="person-circle-outline"
-              size={45}
+              size={50}
               color={theme.emerald}
               style={styles.chatImg}
             />
           )}
         </View>
-        <View style={styles.infoBox}>
+        <View
+          style={[styles.infoBox, bottomText && styles.infoBoxWithThirdText]}
+        >
           <View style={styles.detailsBox}>
             <Text style={styles.topText}>{topText}</Text>
           </View>
-          <View style={styles.detailsBox}>
-            <Text style={styles.bottomText}>{bottomText}</Text>
-          </View>
+          {bottomText && (
+            <View style={styles.detailsBox}>
+              <Text style={styles.bottomText}>{bottomText}</Text>
+            </View>
+          )}
           {thirdText && (
             <View style={styles.detailsBox}>
               <Text style={styles.thirdText}>{thirdText}</Text>
@@ -58,7 +63,12 @@ export const Item = ({
         </View>
         <View style={styles.rightBox}>
           {timeOnRight && (
-            <Text style={styles.msgPreviewTime}>
+            <Text
+              style={[
+                styles.msgPreviewTime,
+                !hasSmallImg && styles.msgPreviewTimeExtraPadding,
+              ]}
+            >
               {time ? Moment(time).format('HH:mm') : 'now'}
             </Text>
           )}
@@ -88,14 +98,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   leftBox: {
-    backgroundColor: theme.onyx,
     borderRadius: 10,
     maxWidth: '25%',
-    padding: 10,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+  },
+  leftBoxDate: {
+    backgroundColor: theme.onyx,
+    padding: 10,
   },
   gameDateDay: {
     color: theme.emerald,
@@ -125,12 +137,13 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'space-between',
     padding: 5,
-    paddingLeft: 10,
-    paddingRight: 0,
+  },
+  infoBoxWithThirdText: {
+    justifyContent: 'space-around',
   },
   detailsBox: {
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   topText: {
     color: theme.gainsboro,
@@ -161,5 +174,8 @@ const styles = StyleSheet.create({
     color: theme.emerald,
     fontFamily: 'GemunuLibreMedium',
     letterSpacing: 1,
+  },
+  msgPreviewTimeExtraPadding: {
+    paddingTop: 10,
   },
 });
