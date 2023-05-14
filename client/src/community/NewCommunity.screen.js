@@ -7,12 +7,11 @@ import { theme } from '../ui/theme';
 import PrimaryButton from '../ui/PrimaryButton';
 import { DropDown } from '../ui/DropDown';
 
-export const CreateCommunity = ({ navigation, setGames }) => {
+export const CreateCommunity = ({ navigation }) => {
   const [name, setName] = useState('');
   const [homePitch, setHomePitch] = useState('');
   const [numberASide, setNumberASide] = useState('');
   const [selectedNumberTeams, setNumberTeams] = useState('');
-  const numberOfTeams = [{ value: 1 }, { value: 2 }];
 
   const userProfile = useContext(UserContext);
 
@@ -21,7 +20,7 @@ export const CreateCommunity = ({ navigation, setGames }) => {
       name: name,
       home_pitch: homePitch,
       //days: days,
-      max_players: maxPlayers,
+      max_players: numberASide,
       creator: userProfile,
       admins: [userProfile],
       members: [userProfile],
@@ -60,7 +59,7 @@ export const CreateCommunity = ({ navigation, setGames }) => {
         <TextInput
           style={styles.input}
           value={homePitch}
-          label="home_pitch"
+          label="Home Pitch"
           onChangeText={setHomePitch}
           placeholder="Green Park"
           keyboardType="default"
@@ -105,12 +104,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: theme.blackish,
   },
-  modal: {
-    left: 0,
-  },
-  h2: {
-    fontSize: 20,
-  },
   label: {
     paddingTop: 10,
     paddingBottom: 5,
@@ -129,25 +122,5 @@ const styles = StyleSheet.create({
     height: 50,
     width: 300,
     color: theme.white,
-  },
-  dateTime: {
-    borderWidth: 1,
-    borderColor: '#666',
-    padding: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    height: 50,
-    width: 300,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  picker: {
-    borderWidth: 1,
-    borderColor: theme.darkGrey,
-    padding: 10,
-    borderRadius: 20,
-    height: 50,
-    width: 300,
-    alignItems: 'center',
   },
 });

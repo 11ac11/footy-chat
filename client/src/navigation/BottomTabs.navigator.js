@@ -46,14 +46,10 @@ export const BottomTabsNavigator = ({ setIsAuthenticated }) => {
         )}
       </BottomTabs.Screen>
       <BottomTabs.Screen name="CommunityStack" style={styles.container}>
-        {(props) => (
-          <CommunityStack {...props} setIsAuthenticated={setIsAuthenticated} />
-        )}
+        {(props) => <CommunityStack {...props} />}
       </BottomTabs.Screen>
       <BottomTabs.Screen name="MessageStack" style={styles.container}>
-        {(props) => (
-          <MessageStack {...props} setIsAuthenticated={setIsAuthenticated} />
-        )}
+        {(props) => <MessageStack {...props} />}
       </BottomTabs.Screen>
     </BottomTabs.Navigator>
   );
