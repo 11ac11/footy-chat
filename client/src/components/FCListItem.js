@@ -7,7 +7,6 @@ import { useContext } from 'react';
 import { theme } from '../ui/theme';
 
 export const FCListItem = ({
-  navigation,
   leftBoxDate,
   hasSmallImg,
   timeOnRight,
@@ -16,16 +15,14 @@ export const FCListItem = ({
   thirdText,
   date,
   time,
+  image,
+  onPress,
 }) => {
   const user = useContext(UserContext);
 
-  const handleNavigate = () => {
-    console.log('would navigate');
-  };
-
   return (
     <>
-      <Pressable style={styles.gameItemBox} onPress={handleNavigate}>
+      <Pressable style={styles.gameItemBox} onPress={onPress}>
         <View style={[styles.leftBox, leftBoxDate && styles.leftBoxDate]}>
           {leftBoxDate ? (
             <>
@@ -35,6 +32,8 @@ export const FCListItem = ({
               <Text style={styles.gameDateDay}>{Moment(date).format('D')}</Text>
               <Text style={styles.gameDate}>{Moment(date).format('MMM')}</Text>
             </>
+          ) : image ? (
+            image
           ) : (
             <Ionicons
               name="person-circle-outline"
@@ -72,14 +71,17 @@ export const FCListItem = ({
               {time ? Moment(time).format('HH:mm') : 'now'}
             </Text>
           )}
-          {hasSmallImg && (
-            <Ionicons
-              name="person-circle-outline"
-              size={30}
-              color={theme.emerald}
-              style={styles.chatImg}
-            />
-          )}
+          {hasSmallImg &&
+            (image ? (
+              image
+            ) : (
+              <Ionicons
+                name="person-circle-outline"
+                size={30}
+                color={theme.emerald}
+                style={styles.chatImg}
+              />
+            ))}
         </View>
       </Pressable>
     </>

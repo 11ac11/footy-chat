@@ -3,28 +3,30 @@ import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { theme } from '../ui/theme';
 import { Community } from './Community.screen';
+import { communityService } from '../services/communityService';
 
 const Stack = createStackNavigator();
 
 export const CommunityStack = ({ navigation }) => {
-  // const [games, setGames] = useState([]);
-  // const [loading, setLoading] = useState(false);
+  const [communities, setCommunities] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // async function fetchGames() {
-  //   try {
-  //     setLoading(true);
-  //     const games = await gameService.getGames();
-  //     setGames(games.sort((a, b) => new Date(a.date) - new Date(b.date)));
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
+  async function fetchCommunities() {
+    try {
+      setLoading(true);
+      const communities = await communityService.getCommunities();
+      console.log(communities);
+      setCommunities(communities);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-  // useEffect(() => {
-  //   fetchGames();
-  // }, []);
+  useEffect(() => {
+    fetchCommunities();
+  }, []);
 
   return (
     <Stack.Navigator
@@ -47,7 +49,13 @@ export const CommunityStack = ({ navigation }) => {
       }}
     >
       <Stack.Screen name="Community">
-        {(props) => <Community {...props} />}
+        {(props) => (
+          <Community
+            {...props}
+            setCommunities={setCommunities}
+            communities={communities}
+          />
+        )}
       </Stack.Screen>
     </Stack.Navigator>
   );

@@ -259,4 +259,18 @@ const seedGame = [
   },
 ];
 
+const seedCommunity = [
+  {
+    name: 'FC Real Love Inn',
+    home_pitch: 'Easton Goals',
+    days: ['Thu'],
+    creator: 'John Doe',
+    admins: ['Jane Smith', 'Bob Johnson'],
+    members: ['Alice Brown', 'David Lee', 'Sarah Wilson'],
+    games: ['5v5', '7v7', '11v11'],
+    colours: ['#FFA500', '#000080'],
+    isTeam: true,
+  },
+];
+
 module.exports = { seedPlayers, seedGame };

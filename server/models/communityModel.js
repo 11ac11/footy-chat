@@ -9,6 +9,12 @@ const communitySchema = new Schema({
     type: String,
     required: true,
   },
+  home_pitch: {
+    type: String,
+  },
+  days: {
+    type: String,
+  },
   creator: {
     type: String,
     required: true,
@@ -22,10 +28,15 @@ const communitySchema = new Schema({
   },
   games: {
     type: Array,
-    required: true,
   },
   image: {
     type: String,
+  },
+  colours: {
+    type: Array,
+  },
+  isTeam: {
+    type: Boolean,
   },
 });
 

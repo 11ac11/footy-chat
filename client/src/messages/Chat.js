@@ -5,6 +5,7 @@ import socket from '../../utils/socket';
 
 import { FCList } from '../components/FCList';
 import { FCListItem } from '../components/FCListItem';
+import TeamCircleSplit from '../../assets/svgs/TeamCircleSplit';
 
 import { ChatComponent } from './ChatComponent';
 import { theme } from '../ui/theme';

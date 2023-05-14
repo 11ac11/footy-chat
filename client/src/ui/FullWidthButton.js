@@ -4,7 +4,7 @@ import { theme } from './theme';
 export default function FullWidthButton({
   navigation,
   children,
-  setGames,
+  setItems,
   text,
   onPress,
 }) {
@@ -26,7 +26,7 @@ export default function FullWidthButton({
               styles.button,
             ]
       }
-      setGames={setGames}
+      setItems={setItems}
     >
       <Text
         style={text == 'Leave' ? [styles.text, styles.blackish] : styles.text}

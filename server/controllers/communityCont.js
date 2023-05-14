@@ -2,6 +2,7 @@ const community = require('../models/communityModel');
 
 const getCommunities = async (ctx) => {
   try {
+    console.log('hittin');
     ctx.body = await community.find({});
     ctx.status = 200;
     console.log('GET community: successful.');
