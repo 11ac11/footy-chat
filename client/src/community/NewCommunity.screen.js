@@ -1,43 +1,33 @@
 import React, { useState, useContext } from 'react';
-import {
-  Text,
-  Modal,
-  View,
-  StyleSheet,
-  TextInput,
-  Pressable,
-} from 'react-native';
-import SelectList from 'react-native-dropdown-select-list';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { Text, StyleSheet, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { UserContext } from '../../../App';
-import { gameService } from '../../services/gameService';
-import { theme } from '../../ui/theme';
-import PrimaryButton from '../../ui/PrimaryButton';
+import { UserContext } from '../../App';
+import { theme } from '../ui/theme';
+import PrimaryButton from '../ui/PrimaryButton';
+import { DropDown } from '../ui/DropDown';
 
-export const CreateCommunityModal = ({ navigation, setGames }) => {
-  const [description, setDescription] = useState('');
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [location, setLocation] = useState('');
-  const [maxPlayers, setMaxPlayers] = useState('');
+export const CreateCommunity = ({ navigation, setGames }) => {
+  const [name, setName] = useState('');
+  const [homePitch, setHomePitch] = useState('');
+  const [numberASide, setNumberASide] = useState('');
   const [selectedNumberTeams, setNumberTeams] = useState('');
   const numberOfTeams = [{ value: 1 }, { value: 2 }];
 
-  const profile = useContext(UserContext);
+  const userProfile = useContext(UserContext);
 
   function handlePress() {
     const newCommunity = {
-      description: description,
-      location: location,
+      name: name,
+      home_pitch: homePitch,
+      //days: days,
       max_players: maxPlayers,
-      teams: selectedNumberTeams,
-      admin: profile._id,
-      admin_name: profile.name,
-      players: [profile],
+      creator: userProfile,
+      admins: [userProfile],
+      members: [userProfile],
     };
+
+    console.log(newCommunity);
 
     // HANDLE COMMUNITY
     // gameService
@@ -54,65 +44,53 @@ export const CreateCommunityModal = ({ navigation, setGames }) => {
   }
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.label}>Description</Text>
-      <TextInput
-        style={styles.input}
-        value={description}
-        label="description"
-        onChangeText={setDescription}
-        placeholder="e.g. 'Sunday Kick-about'"
-        maxLength={50}
-        placeholderTextColor={theme.darkGrey}
-      />
-      <Text style={styles.label}>Home pitch</Text>
-      <TextInput
-        style={styles.input}
-        value={location}
-        label="location"
-        onChangeText={setLocation}
-        placeholder="Where's the game?"
-        keyboardType="default"
-        maxLength={50}
-        placeholderTextColor={theme.darkGrey}
-      />
-      <Text style={styles.label}>Max. players per team</Text>
-      <TextInput
-        style={styles.input}
-        value={maxPlayers}
-        label="location"
-        onChangeText={setMaxPlayers}
-        placeholder="e.g. 14 - (remember to add subs here)"
-        placeholderTextColor={theme.darkGrey}
-        keyboardType="numeric"
-        maxLength={2}
-      />
+    <View style={styles.bg}>
+      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.label}>Name</Text>
+        <TextInput
+          style={styles.input}
+          value={name}
+          label="Name"
+          onChangeText={setName}
+          placeholder="World XI"
+          maxLength={50}
+          placeholderTextColor={theme.darkGrey}
+        />
+        <Text style={styles.label}>Home pitch</Text>
+        <TextInput
+          style={styles.input}
+          value={homePitch}
+          label="home_pitch"
+          onChangeText={setHomePitch}
+          placeholder="Green Park"
+          keyboardType="default"
+          maxLength={50}
+          placeholderTextColor={theme.darkGrey}
+        />
 
-      <Text style={styles.label}>Number of teams</Text>
-      <SelectList
-        setSelected={setNumberTeams}
-        data={numberOfTeams}
-        onSelect={() => setNumberTeams(selectedNumberTeams)}
-        boxStyles={styles.picker}
-        search={false}
-        dropdownStyles={{
-          borderRadius: 30,
-          flexGrow: 0,
-          borderColor: theme.darkGrey,
-        }}
-        inputStyles={{ color: theme.white }}
-        dropdownTextStyles={{ color: theme.darkGrey }}
-      />
-      <PrimaryButton onPress={handlePress} text={'Save'} />
-    </KeyboardAwareScrollView>
+        <Text style={styles.label}>Number of teams</Text>
+        <DropDown
+          setSelected={setNumberASide}
+          data={['5-a-side', '6-a-side']}
+          onSelect={() => console.log('done')}
+        />
+        <PrimaryButton onPress={handlePress} text={'Save'} />
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  bg: {
+    flexGrow: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.blackish,
+  },
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 0,
-    left: -20,
     width: '100%',
     marginHorizontal: 20,
     alignItems: 'center',
@@ -128,7 +106,7 @@ const styles = StyleSheet.create({
   label: {
     paddingTop: 10,
     paddingBottom: 5,
-    marginHorizontal: 40,
+    marginHorizontal: 10,
     fontFamily: 'GemunuLibreBold',
     fontSize: 16,
     alignSelf: 'flex-start',

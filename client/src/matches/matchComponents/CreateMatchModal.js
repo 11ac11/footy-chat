@@ -7,7 +7,6 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
-import SelectList from 'react-native-dropdown-select-list';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -15,6 +14,7 @@ import { UserContext } from '../../../App';
 import { gameService } from '../../services/gameService';
 import { theme } from '../../ui/theme';
 import PrimaryButton from '../../ui/PrimaryButton';
+import { DropDown } from '../../ui/DropDown';
 
 export const CreateMatchModal = ({ navigation, setGames }) => {
   const [description, setDescription] = useState('');
@@ -85,7 +85,7 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
 
     return date;
   };
-  roundToNextHour(date);
+  //roundToNextHour(date);
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -185,19 +185,11 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
       />
 
       <Text style={styles.label}>Number of teams</Text>
-      <SelectList
+      <DropDown
         setSelected={setNumberTeams}
         data={numberOfTeams}
         onSelect={() => setNumberTeams(selectedNumberTeams)}
-        boxStyles={styles.picker}
-        search={false}
-        dropdownStyles={{
-          borderRadius: 30,
-          flexGrow: 0,
-          borderColor: theme.darkGrey,
-        }}
-        inputStyles={{ color: theme.white }}
-        dropdownTextStyles={{ color: theme.darkGrey }}
+        placeholder={'Please select'}
       />
       <PrimaryButton onPress={handlePress} text={'Save'} />
     </KeyboardAwareScrollView>

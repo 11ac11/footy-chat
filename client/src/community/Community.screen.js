@@ -11,13 +11,11 @@ export const Community = ({ navigation, communities, setCommunities }) => {
     navigation,
   };
 
-  console.log(communities);
-
   return (
     <View style={styles.container}>
       <FullWidthButton
         text={'Create new community'}
-        onPress={() => console.log('would nav')}
+        onPress={() => navigation.navigate('Create Community')}
         setItems={setCommunities}
       />
       {communities && (

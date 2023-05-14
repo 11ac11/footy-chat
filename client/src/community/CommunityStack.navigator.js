@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { theme } from '../ui/theme';
 import { Community } from './Community.screen';
+import { CreateCommunity } from './NewCommunity.screen';
 import { communityService } from '../services/communityService';
 
 const Stack = createStackNavigator();
@@ -56,6 +57,9 @@ export const CommunityStack = ({ navigation }) => {
             communities={communities}
           />
         )}
+      </Stack.Screen>
+      <Stack.Screen name="Create Community">
+        {(props) => <CreateCommunity {...props} />}
       </Stack.Screen>
     </Stack.Navigator>
   );
