@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Text,
   Modal,
@@ -28,6 +28,16 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
   const numberOfTeams = [{ value: 1 }, { value: 2 }];
 
   const profile = useContext(UserContext);
+
+  useEffect(() => {
+    const roundToNextHour = (date) => {
+      date.setMinutes(date.getMinutes() + 60);
+      date.setMinutes(0, 0, 0);
+
+      return date;
+    };
+    setDate(roundToNextHour(new Date()));
+  }, []);
 
   function handlePress() {
     const newGame = {
@@ -78,14 +88,6 @@ export const CreateMatchModal = ({ navigation, setGames }) => {
   const showTimepicker = () => {
     showMode('time');
   };
-
-  const roundToNextHour = (date) => {
-    date.setMinutes(date.getMinutes() + 60);
-    date.setMinutes(0, 0, 0);
-
-    return date;
-  };
-  //roundToNextHour(date);
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>

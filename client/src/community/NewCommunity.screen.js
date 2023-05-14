@@ -68,10 +68,18 @@ export const CreateCommunity = ({ navigation, setGames }) => {
           placeholderTextColor={theme.darkGrey}
         />
 
-        <Text style={styles.label}>Number of teams</Text>
+        <Text style={styles.label}>How many starting players?</Text>
         <DropDown
           setSelected={setNumberASide}
-          data={['5-a-side', '6-a-side']}
+          data={[
+            '5-a-side',
+            '6-a-side',
+            '7-a-side',
+            '8-a-side',
+            '9-a-side',
+            '10-a-side',
+            '11-a-side',
+          ]}
           onSelect={() => console.log('done')}
         />
         <PrimaryButton onPress={handlePress} text={'Save'} />

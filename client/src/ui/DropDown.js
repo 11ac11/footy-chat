@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
 import DownChevron from '../../assets/svgs/DownChevron';
