@@ -6,6 +6,7 @@ import { UserContext } from '../../App';
 import { theme } from '../ui/theme';
 import PrimaryButton from '../ui/PrimaryButton';
 import { DropDown } from '../ui/DropDown';
+import { Checkbox } from '../ui/Checkbox';
 
 export const CreateCommunity = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -81,6 +82,7 @@ export const CreateCommunity = ({ navigation }) => {
           ]}
           onSelect={() => console.log('done')}
         />
+        <Checkbox label={'This community is a team'} />
         <PrimaryButton onPress={handlePress} text={'Save'} />
       </KeyboardAwareScrollView>
     </View>
