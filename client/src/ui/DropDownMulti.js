@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { SelectList } from 'react-native-dropdown-select-list';
+import { MultipleSelectList } from 'react-native-dropdown-select-list';
 import DownChevron from '../../assets/svgs/DownChevron';
 import { theme } from './theme';
 
-export const DropDown = ({
+export const DropDownMulti = ({
+  selected,
   setSelected,
   data,
   onSelect,
@@ -23,10 +24,11 @@ export const DropDown = ({
   };
 
   return (
-    <SelectList
-      setSelected={setSelected}
+    <MultipleSelectList
+      setSelected={(val) => setSelected([...selected, val])}
       data={data}
       onSelect={onSelectDropDown}
+      save="value"
       boxStyles={[styles.picker, { width: width ? width : 300 }]}
       search={false}
       dropdownStyles={styles.dropdownStyles}
@@ -34,6 +36,10 @@ export const DropDown = ({
       dropdownTextStyles={{ color: theme.gainsboro }}
       placeholder={placeholder}
       arrowicon={<DownChevron color={theme.gainsboro} />}
+      checkBoxStyles={styles.checkBoxStyles}
+      badgeStyles={styles.badgeStyles}
+      badgeTextStyles={styles.badgeTextStyles}
+      labelStyles={styles.labelStyles}
     />
   );
 };
@@ -44,12 +50,15 @@ const styles = StyleSheet.create({
     borderColor: theme.darkGrey,
     padding: 10,
     borderRadius: 20,
-    height: 50,
     alignItems: 'center',
   },
   dropdownStyles: {
-    borderRadius: 30,
-    flexGrow: 0,
+    maxHeight: 300,
+    width: 300,
+    maxWidth: 300,
+    borderRadius: 20,
+    flexGrow: 1,
+    padding: 0,
     borderColor: theme.darkGrey,
     color: theme.gainsboro,
   },
@@ -58,5 +67,23 @@ const styles = StyleSheet.create({
   },
   inputStyleSelected: {
     color: theme.gainsboro,
+  },
+  checkBoxStyles: {
+    backgroundColor: theme.mediumGreen,
+    borderColor: theme.mediumGreen,
+  },
+  badgeStyles: {
+    backgroundColor: theme.mediumGreen,
+    margin: 0,
+    width: 65,
+    height: 25,
+    alignItems: 'center',
+  },
+  badgeTextStyles: {
+    color: theme.blackish,
+    fontFamily: 'GemunuLibreBold',
+  },
+  labelStyles: {
+    display: 'none',
   },
 });

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, TextInput, Pressable } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import SelectList from 'react-native-dropdown-select-list';
+import { SelectList } from 'react-native-dropdown-select-list';
 
 import auth from '../../utils/auth';
 

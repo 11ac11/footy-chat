@@ -7,12 +7,14 @@ import { theme } from '../ui/theme';
 import PrimaryButton from '../ui/PrimaryButton';
 import { DropDown } from '../ui/DropDown';
 import { Checkbox } from '../ui/Checkbox';
+import { DropDownMulti } from '../ui/DropDownMulti';
 
 export const CreateCommunity = ({ navigation }) => {
   const [name, setName] = useState('');
   const [homePitch, setHomePitch] = useState('');
   const [numberASide, setNumberASide] = useState('');
   const [isTeam, setIsTeam] = useState(false);
+  const [daysPlayed, setDaysPlayed] = useState([]);
 
   const userProfile = useContext(UserContext);
 
@@ -20,7 +22,7 @@ export const CreateCommunity = ({ navigation }) => {
     const newCommunity = {
       name: name,
       home_pitch: homePitch,
-      //days: days,
+      days: daysPlayed,
       max_players: numberASide,
       isTeam: isTeam,
       creator: userProfile,
@@ -82,6 +84,13 @@ export const CreateCommunity = ({ navigation }) => {
             '11-a-side',
           ]}
           onSelect={() => console.log('done')}
+        />
+        <Text style={styles.label}>Which day(s) do you play?</Text>
+        <DropDownMulti
+          selected={daysPlayed}
+          setSelected={setDaysPlayed}
+          data={['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']}
+          onSelect={() => {}}
         />
         <Checkbox
           label={'This community is a team'}
