@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
+import DownChevron from '../../assets/svgs/DownChevron';
 import { theme } from './theme';
 
 export const DropDown = ({
@@ -32,6 +33,7 @@ export const DropDown = ({
       inputStyles={textStyle}
       dropdownTextStyles={{ color: theme.gainsboro }}
       placeholder={placeholder}
+      arrowicon={<DownChevron color={theme.gainsboro} />}
     />
   );
 };
