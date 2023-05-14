@@ -12,7 +12,7 @@ export const CreateCommunity = ({ navigation }) => {
   const [name, setName] = useState('');
   const [homePitch, setHomePitch] = useState('');
   const [numberASide, setNumberASide] = useState('');
-  const [selectedNumberTeams, setNumberTeams] = useState('');
+  const [isTeam, setIsTeam] = useState(false);
 
   const userProfile = useContext(UserContext);
 
@@ -22,6 +22,7 @@ export const CreateCommunity = ({ navigation }) => {
       home_pitch: homePitch,
       //days: days,
       max_players: numberASide,
+      isTeam: isTeam,
       creator: userProfile,
       admins: [userProfile],
       members: [userProfile],
@@ -82,7 +83,11 @@ export const CreateCommunity = ({ navigation }) => {
           ]}
           onSelect={() => console.log('done')}
         />
-        <Checkbox label={'This community is a team'} />
+        <Checkbox
+          label={'This community is a team'}
+          checked={isTeam}
+          setChecked={setIsTeam}
+        />
         <PrimaryButton onPress={handlePress} text={'Save'} />
       </KeyboardAwareScrollView>
     </View>

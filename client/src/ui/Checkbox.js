@@ -3,9 +3,7 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from './theme';
 
-export const Checkbox = ({ label }) => {
-  const [checked, setChecked] = useState(false);
-
+export const Checkbox = ({ label, checked, setChecked }) => {
   const handleCheckboxPress = () => {
     setChecked(!checked);
   };
