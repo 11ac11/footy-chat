@@ -55,8 +55,8 @@ export default function App() {
 
   useEffect(() => {
     // below for auto login while testing
-    autoLogin();
     setUserEmail('demo@footychat.com');
+    autoLogin();
     // delete above when not testing
     fetchProfile();
     console.log('Current user email: ', userEmail);

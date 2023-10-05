@@ -35,7 +35,7 @@ const communitySchema = new Schema({
   colours: {
     type: Array,
   },
-  isTeam: {
+  is_team: {
     type: Boolean,
   },
 });

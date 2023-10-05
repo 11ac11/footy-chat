@@ -59,7 +59,13 @@ export const CommunityStack = ({ navigation }) => {
         )}
       </Stack.Screen>
       <Stack.Screen name="Create Community">
-        {(props) => <CreateCommunity {...props} />}
+        {(props) => (
+          <CreateCommunity
+            {...props}
+            setCommunities={setCommunities}
+            communities={communities}
+          />
+        )}
       </Stack.Screen>
     </Stack.Navigator>
   );

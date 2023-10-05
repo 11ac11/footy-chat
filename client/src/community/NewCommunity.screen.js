@@ -8,13 +8,17 @@ import PrimaryButton from '../ui/PrimaryButton';
 import { DropDown } from '../ui/DropDown';
 import { Checkbox } from '../ui/Checkbox';
 import { DropDownMulti } from '../ui/DropDownMulti';
+import TeamCircleSplit from '../../assets/svgs/TeamCircleSplit';
+import { communityService } from '../services/communityService';
 
-export const CreateCommunity = ({ navigation }) => {
+export const CreateCommunity = ({ navigation, setCommunities }) => {
   const [name, setName] = useState('');
   const [homePitch, setHomePitch] = useState('');
   const [numberASide, setNumberASide] = useState('');
   const [isTeam, setIsTeam] = useState(false);
   const [daysPlayed, setDaysPlayed] = useState([]);
+  const [colourOne, setColourOne] = useState(theme.blackish);
+  const [colourTwo, setColourTwo] = useState(theme.white);
 
   const userProfile = useContext(UserContext);
 
@@ -24,26 +28,27 @@ export const CreateCommunity = ({ navigation }) => {
       home_pitch: homePitch,
       days: daysPlayed,
       max_players: numberASide,
-      isTeam: isTeam,
+      is_team: isTeam,
       creator: userProfile,
       admins: [userProfile],
       members: [userProfile],
+      colours: [colourOne, colourTwo],
     };
 
     console.log(newCommunity);
 
     // HANDLE COMMUNITY
-    // gameService
-    //   .postGame(newGame)
-    //   .then((eventFromDB) => {
-    //     setGames((prevState) =>
-    //       [eventFromDB, ...prevState].sort(
-    //         (a, b) => new Date(a.date) - new Date(b.date)
-    //       )
-    //     );
-    //   })
-    //   .catch((error) => console.log(error));
-    // navigation.goBack();
+    communityService
+      .postCommunity(newCommunity)
+      .then((eventFromDB) => {
+        setCommunities((prevState) =>
+          [eventFromDB, ...prevState].sort(
+            (a, b) => new Date(a.date) - new Date(b.date)
+          )
+        );
+      })
+      .catch((error) => console.log(error));
+    navigation.goBack();
   }
 
   return (
@@ -92,6 +97,29 @@ export const CreateCommunity = ({ navigation }) => {
           data={['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']}
           onSelect={() => {}}
         />
+        <View style={styles.colourSelectionCont}>
+          <View style={styles.colourSelectors}>
+            <Text style={styles.label}>Colour 1?</Text>
+            <DropDown
+              selected={colourOne}
+              setSelected={setColourOne}
+              width={150}
+              data={Object.values(theme)}
+              onSelect={() => {}}
+            />
+            <Text style={styles.label}>Colour 2?</Text>
+            <DropDown
+              selected={colourTwo}
+              setSelected={setColourTwo}
+              width={150}
+              data={Object.values(theme)}
+              onSelect={() => {}}
+            />
+          </View>
+          <View style={[styles.colourSelectors, styles.colourPreview]}>
+            <TeamCircleSplit color1={colourOne} color2={colourTwo} size={150} />
+          </View>
+        </View>
         <Checkbox
           label={'This community is a team'}
           checked={isTeam}
@@ -105,16 +133,14 @@ export const CreateCommunity = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   bg: {
-    flexGrow: 1,
     width: '100%',
+    maxWidth: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.blackish,
   },
   container: {
-    flexGrow: 1,
-    padding: 0,
-    width: '100%',
+    padding: 20,
     marginHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -136,7 +162,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 20,
     height: 50,
-    width: 300,
+    width: '100%',
     color: theme.white,
+  },
+  colourSelectionCont: {
+    height: '30%',
+    minWidth: '100%',
+    width: '100%',
+    maxWidth: '100%',
+    flexDirection: 'row',
+  },
+  colourSelectors: {
+    height: '100%',
+    width: '50%',
+    minWidth: '50%',
+    maxWidth: '50%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  colourPreview: {
+    paddingTop: 35,
+    paddingLeft: 5,
+    justifySelf: 'flex-end',
   },
 });
